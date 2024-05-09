@@ -243,8 +243,8 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>90</x>
-       <y>50</y>
+       <x>110</x>
+       <y>40</y>
        <width>231</width>
        <height>201</height>
       </rect>
@@ -700,7 +700,7 @@ QLineEdit::placeholder {
     <widget class="QWidget" name="gridLayoutWidget_5">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>110</x>
        <y>260</y>
        <width>311</width>
        <height>51</height>
@@ -963,7 +963,7 @@ QLineEdit::placeholder {
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>20</y>
        <width>292</width>
        <height>156</height>
       </rect>
@@ -1222,7 +1222,7 @@ QLineEdit::placeholder {
      <property name="geometry">
       <rect>
        <x>310</x>
-       <y>30</y>
+       <y>20</y>
        <width>292</width>
        <height>156</height>
       </rect>
@@ -1481,7 +1481,7 @@ QLineEdit::placeholder {
      <property name="geometry">
       <rect>
        <x>620</x>
-       <y>30</y>
+       <y>20</y>
        <width>292</width>
        <height>156</height>
       </rect>
@@ -1865,17 +1865,17 @@ QLineEdit::placeholder {
        <x>10</x>
        <y>270</y>
        <width>261</width>
-       <height>71</height>
+       <height>41</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_11">
       <item row="0" column="0">
-       <widget class="QCheckBox" name="checkBox_7">
+       <widget class="QCheckBox" name="CBLVL1Bold">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -1884,72 +1884,393 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QCheckBox" name="checkBox_8">
+       <widget class="QCheckBox" name="CBLVL1Italic">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
           <weight>50</weight>
+          <italic>true</italic>
           <bold>false</bold>
          </font>
         </property>
         <property name="text">
-         <string/>
+         <string>I</string>
         </property>
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QCheckBox" name="checkBox_9">
+       <widget class="QCheckBox" name="CBLVL1Underline">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
           <weight>50</weight>
           <bold>false</bold>
+          <underline>true</underline>
          </font>
         </property>
         <property name="text">
-         <string/>
+         <string>U</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QRadioButton" name="radioButton">
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>320</y>
+       <width>261</width>
+       <height>157</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLabel" name="labelSettings_44">
         <property name="font">
          <font>
+          <family>Verdana</family>
           <pointsize>14</pointsize>
           <weight>50</weight>
+          <italic>false</italic>
           <bold>false</bold>
          </font>
         </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
         <property name="text">
-         <string/>
+         <string>Выравнивание текста</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QRadioButton" name="radioButton_2">
+      <item>
+       <widget class="QRadioButton" name="RBLVL1TextLeft">
         <property name="font">
          <font>
+          <family>Verdana</family>
           <pointsize>14</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
          </font>
         </property>
         <property name="text">
-         <string/>
+         <string>По левому краю</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
-       <widget class="QRadioButton" name="radioButton_3">
+      <item>
+       <widget class="QRadioButton" name="RBLVL1TexMiddle">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По центру</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL1TextRight">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По правому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL1TextWidth">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По ширине</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="gridLayoutWidget_14">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>270</y>
+       <width>261</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_15">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="CBLVL2Bold">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>B</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="CBLVL2Italic">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>true</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>I</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="CBLVL2Underline">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
           <weight>50</weight>
           <bold>false</bold>
+          <underline>true</underline>
          </font>
         </property>
         <property name="text">
-         <string/>
+         <string>U</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>320</y>
+       <width>261</width>
+       <height>157</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QLabel" name="labelSettings_46">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Выравнивание текста</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL2TextLeft">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По левому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL2TexMiddle">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По центру</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL2TextRight">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По правому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL2TextWidth">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По ширине</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="gridLayoutWidget_15">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>270</y>
+       <width>261</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_16">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="CBLVL3Bold">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>B</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="CBLVL3Italic">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>true</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>I</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="CBLVL3Underline">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>U</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>320</y>
+       <width>261</width>
+       <height>157</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <widget class="QLabel" name="labelSettings_47">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Выравнивание текста</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL3TextLeft">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По левому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL3TexMiddle">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По центру</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL3TextRight">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По правому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBLVL3TextWidth">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По ширине</string>
         </property>
        </widget>
       </item>
@@ -1963,8 +2284,8 @@ QLineEdit::placeholder {
     <widget class="QWidget" name="gridLayoutWidget_12">
      <property name="geometry">
       <rect>
-       <x>280</x>
-       <y>60</y>
+       <x>30</x>
+       <y>30</y>
        <width>401</width>
        <height>211</height>
       </rect>
@@ -2328,6 +2649,145 @@ QLineEdit::placeholder {
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="gridLayoutWidget_16">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>30</y>
+       <width>261</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_17">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="CBMainTextBold">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>B</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="CBMainTextItalic">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>true</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>I</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="CBMainTextUnderline">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>U</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_6">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>90</y>
+       <width>261</width>
+       <height>157</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_7">
+      <item>
+       <widget class="QLabel" name="labelSettings_48">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Выравнивание текста</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBMainTextLeft">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По левому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBMainTextMiddle">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По центру</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBMainTextRight">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По правому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBMainTextWidth">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По ширине</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_4">
     <attribute name="title">
@@ -2336,8 +2796,8 @@ QLineEdit::placeholder {
     <widget class="QWidget" name="gridLayoutWidget_25">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>50</y>
+       <x>20</x>
+       <y>30</y>
        <width>394</width>
        <height>159</height>
       </rect>
@@ -2596,8 +3056,8 @@ QComboBox:on {
     <widget class="QWidget" name="gridLayoutWidget_26">
      <property name="geometry">
       <rect>
-       <x>480</x>
-       <y>50</y>
+       <x>490</x>
+       <y>30</y>
        <width>394</width>
        <height>159</height>
       </rect>
@@ -3539,6 +3999,145 @@ QLineEdit::placeholder {
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="gridLayoutWidget_17">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>240</y>
+       <width>261</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_18">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="checkBox_22">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>B</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QCheckBox" name="checkBox_23">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>true</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>I</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="checkBox_24">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>U</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_7">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>290</y>
+       <width>261</width>
+       <height>157</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_8">
+      <item>
+       <widget class="QLabel" name="labelSettings_49">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Выравнивание текста</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBTableTextLeft">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По левому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBTableTextMiddle">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По центру</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBTableTextRight">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По правому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBTableTextWidth">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По ширине</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_6">
     <attribute name="title">
@@ -3547,7 +4146,7 @@ QLineEdit::placeholder {
     <widget class="QWidget" name="gridLayoutWidget_46">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>20</x>
        <y>30</y>
        <width>391</width>
        <height>251</height>
@@ -3873,7 +4472,7 @@ QLineEdit::placeholder {
     <widget class="QWidget" name="verticalLayoutWidget_2">
      <property name="geometry">
       <rect>
-       <x>450</x>
+       <x>470</x>
        <y>30</y>
        <width>438</width>
        <height>71</height>
@@ -4357,6 +4956,202 @@ QLineEdit::placeholder {
         </property>
         <property name="text">
          <string> пт </string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_8">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>290</y>
+       <width>261</width>
+       <height>124</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_9">
+      <item>
+       <widget class="QLabel" name="labelSettings_50">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Выравнивание рисунка</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBPictureLeft">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По левому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBPictureMiddle">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По центру</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBPictureRight">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По правому краю</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="verticalLayoutWidget_9">
+     <property name="geometry">
+      <rect>
+       <x>450</x>
+       <y>330</y>
+       <width>261</width>
+       <height>124</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_10">
+      <item>
+       <widget class="QLabel" name="labelSettings_51">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Выравнивание текста</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBPictureTitleLeft">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По левому краю</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBPictureTitleMiddle">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По центру</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="RBPictureTitleRight">
+        <property name="font">
+         <font>
+          <family>Verdana</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>По правому краю</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="gridLayoutWidget_18">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>350</y>
+       <width>81</width>
+       <height>95</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_19">
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="CBPictureTitleUnderline">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>U</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="CBPictureTitleItalic">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>true</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>I</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="CBPictureTitleBold">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>B</string>
         </property>
        </widget>
       </item>
