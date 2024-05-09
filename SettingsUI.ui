@@ -220,7 +220,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
 }</string>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>0</number>
    </property>
    <property name="documentMode">
     <bool>false</bool>

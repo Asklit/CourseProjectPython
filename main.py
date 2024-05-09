@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 
 from settings import SettingsWindow
 
@@ -10,7 +10,10 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.GoToSettings = None
+        self.fileFlag = False
         uic.loadUi('uiMainFile.ui', self)  # Открытие файла ui
+
+        self.LEErrorLine.hide()
 
         # Привязки функций к кнопкам
         self.btnChooseFile.clicked.connect(self.chooseFile)     # Кнопка выбора файла
@@ -18,10 +21,17 @@ class MainWindow(QMainWindow):
         self.btnSettings.clicked.connect(self.setupSettings)    # Кнопка перехода к настройкам
 
     def chooseFile(self):  # Выбор файла
-        pass
+        dialog = QFileDialog.getOpenFileName(self, "Выбор файла", "", "*.docx")
+        if dialog[0]:
+            self.fileFlag = True
+            self.LENameFile.setText(dialog[0])
+            self.LEErrorLine.hide()
 
     def runCheckingCorrectness(self):  # Запуск проверки корректности
-        pass
+        if self.fileFlag:
+            pass  # Основная часть проверки
+        else:
+            self.LEErrorLine.show()
 
     def setupSettings(self):  # Запуск проверки корректности
         self.GoToSettings = SettingsWindow(self)
