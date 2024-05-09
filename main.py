@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.GoToSettings = None
         self.fileFlag = False
-        self.fileNames = []
+        self.fileNames = []  # Список путей до выбранных файлов
         uic.loadUi('uiMainFile.ui', self)  # Открытие файла ui
 
         self.LEErrorLine.hide()
@@ -34,9 +34,9 @@ class MainWindow(QMainWindow):
         if self.fileFlag:
             pass  # Основная часть проверки
         else:
-            self.LEErrorLine.show()
+            self.LEErrorLine.show()  # Вывод сообщения об отсутствии выбранных файлов
 
-    def setupSettings(self):  # Запуск проверки корректности
+    def setupSettings(self):  # Запуск окна настроек
         self.GoToSettings = SettingsWindow(self)
         self.hide()
         self.GoToSettings.show()
