@@ -220,7 +220,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
 }</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>4</number>
    </property>
    <property name="documentMode">
     <bool>false</bool>
@@ -727,7 +727,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="CBFontName">
         <property name="font">
          <font>
           <family>Verdana</family>
@@ -923,7 +923,7 @@ QComboBox:on {
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="LEFieldsRight_2">
+       <widget class="QLineEdit" name="LENumerationStartFrom">
         <property name="font">
          <font>
           <family>Verdana</family>
@@ -1958,7 +1958,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="RBLVL1TexMiddle">
+       <widget class="QRadioButton" name="RBLVL1TextMiddle">
         <property name="font">
          <font>
           <family>Verdana</family>
@@ -2097,7 +2097,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="RBLVL2TexMiddle">
+       <widget class="QRadioButton" name="RBLVL2TextMiddle">
         <property name="font">
          <font>
           <family>Verdana</family>
@@ -2236,7 +2236,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="RBLVL3TexMiddle">
+       <widget class="QRadioButton" name="RBLVL3TextMiddle">
         <property name="font">
          <font>
           <family>Verdana</family>
@@ -3984,7 +3984,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QCheckBox" name="CBTableHeadingBottom">
+       <widget class="QCheckBox" name="CBTableHeadingLeft">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
@@ -4010,7 +4010,7 @@ QLineEdit::placeholder {
      </property>
      <layout class="QGridLayout" name="gridLayout_18">
       <item row="0" column="0">
-       <widget class="QCheckBox" name="checkBox_22">
+       <widget class="QCheckBox" name="CBTableBold">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
@@ -4024,7 +4024,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QCheckBox" name="checkBox_23">
+       <widget class="QCheckBox" name="CBTableItalic">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
@@ -4039,7 +4039,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QCheckBox" name="checkBox_24">
+       <widget class="QCheckBox" name="CBTableUnderline">
         <property name="font">
          <font>
           <pointsize>14</pointsize>
@@ -4642,7 +4642,7 @@ QComboBox:on {
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="LEPictureTitleSpacingBefore">
+       <widget class="QLineEdit" name="LEPictureFontSize">
         <property name="maximumSize">
          <size>
           <width>80</width>
@@ -4679,7 +4679,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="LEPictureTitleSpacingBefore_2">
+       <widget class="QLineEdit" name="LEPictureTitleSpacingBefore">
         <property name="maximumSize">
          <size>
           <width>80</width>
@@ -4848,7 +4848,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="LEPictureTitleSpacingAfter_2">
+       <widget class="QLineEdit" name="LEPictureTitleSpacingBetween">
         <property name="maximumSize">
          <size>
           <width>80</width>
@@ -4885,7 +4885,7 @@ QLineEdit::placeholder {
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLineEdit" name="LEPictureTitleSpacingAfter_3">
+       <widget class="QLineEdit" name="LEPictureTitleSpacingFirstLine">
         <property name="maximumSize">
          <size>
           <width>80</width>
