@@ -10,6 +10,12 @@
     <height>680</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>940</width>
+    <height>680</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Checker</string>
   </property>
