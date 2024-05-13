@@ -1,16 +1,19 @@
 import sys
 
-from PyQt5 import uic, QtCore
+from PyQt5 import uic, QtCore, QtWidgets
 from PyQt5.QtWidgets import QWidget, QApplication
+
+from SettingsUi import Ui_Settings
 
 
 class SettingsWindow(QWidget):
     def __init__(self, *args):
-        super().__init__()
+        super(SettingsWindow, self).__init__()
         uic.loadUi('SettingsUI.ui', self)  # Открытие файла ui
         self.main = args[0]
         self.btnGoBack.clicked.connect(self.goBack)     # Кнопка перехода обратно в основное меню
         self.btnDefaultSettings.clicked.connect(self.setDefaultSettings)     # Кнопка установки базовых настроек
+        self.btnHelp.clicked.connect(self.main.openDocumentation)
 
     def goBack(self):  # Вернуться назад в основное окно
         self.hide()

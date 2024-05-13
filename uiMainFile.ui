@@ -254,6 +254,43 @@ QLineEdit::placeholder {
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnHelp">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>600</y>
+      <width>180</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+  color: solid black;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid black;
+  outline: 0px;
+}
+QPushButton:hover {
+  background-color: #6E6E6E;
+  border: 1px solid black;
+}</string>
+    </property>
+    <property name="text">
+     <string>Помощь</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

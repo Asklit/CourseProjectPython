@@ -27,6 +27,8 @@ class MainWindow(QMainWindow):
         self.table_checklist = None
         self.picture_checklist = None
 
+        self.proc = None
+
         keyboard.add_hotkey("f1", self.openDocumentation)
 
         self.LEErrorLine.hide()
@@ -35,12 +37,16 @@ class MainWindow(QMainWindow):
         self.btnChooseFile.clicked.connect(self.chooseFile)     # Кнопка выбора файла
         self.btnRun.clicked.connect(self.runCheckingCorrectness)    # Кнопка запуска проверки файла
         self.btnSettings.clicked.connect(self.setupSettings)    # Кнопка перехода к настройкам
+        self.btnHelp.clicked.connect(self.openDocumentation)
 
     def openDocumentation(self):
+        if self.proc is not None:
+            self.proc.kill()
+
         if self.isActiveWindow():
-            self.proc = subprocess.Popen("hh.exe -mapid" + "00" "HelpMenu.chm")
+            self.proc = subprocess.Popen("hh.exe -mapid" + "100" + " HelpMenu.chm")
         else:
-            self.proc = subprocess.Popen("hh.exe -mapid" + "1" + str(self.SettingsWindow.tabWidget.currentIndex()) + "HelpMenu.chm")
+            self.proc = subprocess.Popen("hh.exe -mapid" + "20" + str(self.SettingsWindow.tabWidget.currentIndex() + 1) + " HelpMenu.chm")
 
     def chooseFile(self):  # Выбор файла
         dialog = QFileDialog.getOpenFileNames(self, "Выбор файла", "", "*.docx")
