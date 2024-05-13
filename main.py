@@ -9,10 +9,6 @@ from settings import SettingsWindow
 import keyboard
 
 
-class QWiddet:
-    pass
-
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
