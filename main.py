@@ -37,6 +37,7 @@ class MainWindow(QMainWindow):
         self.btnChooseFile.clicked.connect(self.chooseFile)     # Кнопка выбора файла
         self.btnRun.clicked.connect(self.runCheckingCorrectness)    # Кнопка запуска проверки файла
         self.btnSettings.clicked.connect(self.setupSettings)    # Кнопка перехода к настройкам
+        self.btnHelp.clicked.connect(self.openDocumentation)
 
     def openDocumentation(self):
         if self.proc is not None:
