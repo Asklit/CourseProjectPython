@@ -1,4 +1,5 @@
 import os
+import subprocess
 import sys
 
 from PyQt5 import uic
@@ -6,6 +7,10 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from settings import SettingsWindow
 import keyboard
+
+
+class QWiddet:
+    pass
 
 
 class MainWindow(QMainWindow):
@@ -36,7 +41,10 @@ class MainWindow(QMainWindow):
         self.btnSettings.clicked.connect(self.setupSettings)    # Кнопка перехода к настройкам
 
     def openDocumentation(self):
-        os.system("HelpMenu.chm")
+        if self.isActiveWindow():
+            self.proc = subprocess.Popen("hh.exe -mapid" + "00" "HelpMenu.chm")
+        else:
+            self.proc = subprocess.Popen("hh.exe -mapid" + "1" + str(self.SettingsWindow.tabWidget.currentIndex()) + "HelpMenu.chm")
 
     def chooseFile(self):  # Выбор файла
         dialog = QFileDialog.getOpenFileNames(self, "Выбор файла", "", "*.docx")
