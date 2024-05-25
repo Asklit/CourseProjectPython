@@ -226,7 +226,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
 }</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="documentMode">
     <bool>false</bool>
@@ -708,7 +708,7 @@ QLineEdit::placeholder {
       <rect>
        <x>110</x>
        <y>260</y>
-       <width>311</width>
+       <width>317</width>
        <height>51</height>
       </rect>
      </property>
@@ -743,46 +743,30 @@ QLineEdit::placeholder {
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox{
-  padding: 1px 15px 1px 3px;
-  border:1px solid black;
-  border-radius:5px 5px 0px 0px;
-} 
-QComboBox::drop-down {
-      subcontrol-origin: padding;
-      subcontrol-position: top right;
-      border:none;
-  }
-QComboBox QAbstractItemView{
-	background: white;
-    border:1px solid black;
-    border-radius:0px 0px 5px 5px;
-    outline: 0px;
-  }
-QComboBox QAbstractItemView::item{
-	height:36px;
-	color: silver;
-	padding-left:9px;
-	background-color:#FFFFFF;
-}
- QComboBox QAbstractItemView::item:hover{ //Hover
-  background-color: silver;
-  color: black;
-}
- QComboBox QAbstractItemView::item:selected{//selected
-  background-color: red;
-  color: black;
-}
-QComboBox:on { 
-      padding-top: 3px;
-      padding-left: 4px;
-  }
-  QComboBox::down-arrow:on { 
-      top: 1px;
-      left: 1px;
-  }
-
-</string>
+         <string notr="true">QComboBox {
+        border-radius: 8px;
+        border: 1px solid black;
+        padding: 5px 15px;
+    }
+    QComboBox::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 15px;
+        border-left-width: 1px;
+        border-left-color: darkgray;
+        border-left-style: solid; /* just a single line */
+        border-top-right-radius: 3px; /* same radius as the QComboBox */
+        border-bottom-right-radius: 3px;
+    }
+    QComboBox::down-arrow {
+        image: url(down_arrow.png);
+    }
+    QComboBox:focus {
+        border: 1px solid yellow;
+    }
+    QComboBox::placeholder {
+        color: #767e89;
+    }</string>
         </property>
         <item>
          <property name="text">
@@ -2805,7 +2789,7 @@ QLineEdit::placeholder {
        <x>20</x>
        <y>30</y>
        <width>394</width>
-       <height>159</height>
+       <height>175</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_25">
@@ -2844,46 +2828,30 @@ QLineEdit::placeholder {
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox{
-  padding: 1px 15px 1px 3px;
-  border:1px solid black;
-  border-radius:5px 5px 0px 0px;
-} 
-QComboBox::drop-down {
-      subcontrol-origin: padding;
-      subcontrol-position: top right;
-      border:none;
-  }
-QComboBox QAbstractItemView{
-	background: white;
-    border:1px solid black;
-    border-radius:0px 0px 5px 5px;
-    outline: 0px;
-  }
-QComboBox QAbstractItemView::item{
-	height:36px;
-	color: silver;
-	padding-left:9px;
-	background-color:#FFFFFF;
-}
- QComboBox QAbstractItemView::item:hover{ //Hover
-  background-color: silver;
-  color: black;
-}
- QComboBox QAbstractItemView::item:selected{//selected
-  background-color: red;
-  color: black;
-}
-QComboBox:on { 
-      padding-top: 3px;
-      padding-left: 4px;
-  }
-  QComboBox::down-arrow:on { 
-      top: 1px;
-      left: 1px;
-  }
-
-</string>
+         <string notr="true">QComboBox {
+        border-radius: 8px;
+        border: 1px solid black;
+        padding: 5px 15px;
+    }
+    QComboBox::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 15px;
+        border-left-width: 1px;
+        border-left-color: darkgray;
+        border-left-style: solid; /* just a single line */
+        border-top-right-radius: 3px; /* same radius as the QComboBox */
+        border-bottom-right-radius: 3px;
+    }
+    QComboBox::down-arrow {
+        image: url(down_arrow.png);
+    }
+    QComboBox:focus {
+        border: 1px solid yellow;
+    }
+    QComboBox::placeholder {
+        color: #767e89;
+    }</string>
         </property>
         <item>
          <property name="text">
@@ -2975,46 +2943,30 @@ QComboBox:on {
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox{
-  padding: 1px 15px 1px 3px;
-  border:1px solid black;
-  border-radius:5px 5px 0px 0px;
-} 
-QComboBox::drop-down {
-      subcontrol-origin: padding;
-      subcontrol-position: top right;
-      border:none;
-  }
-QComboBox QAbstractItemView{
-	background: white;
-    border:1px solid black;
-    border-radius:0px 0px 5px 5px;
-    outline: 0px;
-  }
-QComboBox QAbstractItemView::item{
-	height:36px;
-	color: silver;
-	padding-left:9px;
-	background-color:#FFFFFF;
-}
- QComboBox QAbstractItemView::item:hover{ //Hover
-  background-color: silver;
-  color: black;
-}
- QComboBox QAbstractItemView::item:selected{//selected
-  background-color: red;
-  color: black;
-}
-QComboBox:on { 
-      padding-top: 3px;
-      padding-left: 4px;
-  }
-  QComboBox::down-arrow:on { 
-      top: 1px;
-      left: 1px;
-  }
-
-</string>
+         <string notr="true">QComboBox {
+        border-radius: 8px;
+        border: 1px solid black;
+        padding: 5px 15px;
+    }
+    QComboBox::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 15px;
+        border-left-width: 1px;
+        border-left-color: darkgray;
+        border-left-style: solid; /* just a single line */
+        border-top-right-radius: 3px; /* same radius as the QComboBox */
+        border-bottom-right-radius: 3px;
+    }
+    QComboBox::down-arrow {
+        image: url(down_arrow.png);
+    }
+    QComboBox:focus {
+        border: 1px solid yellow;
+    }
+    QComboBox::placeholder {
+        color: #767e89;
+    }</string>
         </property>
         <item>
          <property name="text">
@@ -3065,7 +3017,7 @@ QComboBox:on {
        <x>490</x>
        <y>30</y>
        <width>394</width>
-       <height>159</height>
+       <height>175</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_26">
@@ -3085,46 +3037,30 @@ QComboBox:on {
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox{
-  padding: 1px 15px 1px 3px;
-  border:1px solid black;
-  border-radius:5px 5px 0px 0px;
-} 
-QComboBox::drop-down {
-      subcontrol-origin: padding;
-      subcontrol-position: top right;
-      border:none;
-  }
-QComboBox QAbstractItemView{
-	background: white;
-    border:1px solid black;
-    border-radius:0px 0px 5px 5px;
-    outline: 0px;
-  }
-QComboBox QAbstractItemView::item{
-	height:36px;
-	color: silver;
-	padding-left:9px;
-	background-color:#FFFFFF;
-}
- QComboBox QAbstractItemView::item:hover{ //Hover
-  background-color: silver;
-  color: black;
-}
- QComboBox QAbstractItemView::item:selected{//selected
-  background-color: red;
-  color: black;
-}
-QComboBox:on { 
-      padding-top: 3px;
-      padding-left: 4px;
-  }
-  QComboBox::down-arrow:on { 
-      top: 1px;
-      left: 1px;
-  }
-
-</string>
+         <string notr="true">QComboBox {
+        border-radius: 8px;
+        border: 1px solid black;
+        padding: 5px 15px;
+    }
+    QComboBox::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 15px;
+        border-left-width: 1px;
+        border-left-color: darkgray;
+        border-left-style: solid; /* just a single line */
+        border-top-right-radius: 3px; /* same radius as the QComboBox */
+        border-bottom-right-radius: 3px;
+    }
+    QComboBox::down-arrow {
+        image: url(down_arrow.png);
+    }
+    QComboBox:focus {
+        border: 1px solid yellow;
+    }
+    QComboBox::placeholder {
+        color: #767e89;
+    }</string>
         </property>
         <item>
          <property name="text">
@@ -3221,46 +3157,30 @@ QComboBox:on {
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox{
-  padding: 1px 15px 1px 3px;
-  border:1px solid black;
-  border-radius:5px 5px 0px 0px;
-} 
-QComboBox::drop-down {
-      subcontrol-origin: padding;
-      subcontrol-position: top right;
-      border:none;
-  }
-QComboBox QAbstractItemView{
-	background: white;
-    border:1px solid black;
-    border-radius:0px 0px 5px 5px;
-    outline: 0px;
-  }
-QComboBox QAbstractItemView::item{
-	height:36px;
-	color: silver;
-	padding-left:9px;
-	background-color:#FFFFFF;
-}
- QComboBox QAbstractItemView::item:hover{ //Hover
-  background-color: silver;
-  color: black;
-}
- QComboBox QAbstractItemView::item:selected{//selected
-  background-color: red;
-  color: black;
-}
-QComboBox:on { 
-      padding-top: 3px;
-      padding-left: 4px;
-  }
-  QComboBox::down-arrow:on { 
-      top: 1px;
-      left: 1px;
-  }
-
-</string>
+         <string notr="true">QComboBox {
+        border-radius: 8px;
+        border: 1px solid black;
+        padding: 5px 15px;
+    }
+    QComboBox::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 15px;
+        border-left-width: 1px;
+        border-left-color: darkgray;
+        border-left-style: solid; /* just a single line */
+        border-top-right-radius: 3px; /* same radius as the QComboBox */
+        border-bottom-right-radius: 3px;
+    }
+    QComboBox::down-arrow {
+        image: url(down_arrow.png);
+    }
+    QComboBox:focus {
+        border: 1px solid yellow;
+    }
+    QComboBox::placeholder {
+        color: #767e89;
+    }</string>
         </property>
         <item>
          <property name="text">
@@ -3460,7 +3380,7 @@ QLineEdit::placeholder {
        <x>400</x>
        <y>30</y>
        <width>438</width>
-       <height>71</height>
+       <height>74</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -3521,46 +3441,30 @@ QLineEdit::placeholder {
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">QComboBox{
-  padding: 1px 15px 1px 3px;
-  border:1px solid black;
-  border-radius:5px 5px 0px 0px;
-} 
-QComboBox::drop-down {
-      subcontrol-origin: padding;
-      subcontrol-position: top right;
-      border:none;
-  }
-QComboBox QAbstractItemView{
-	background: white;
-    border:1px solid black;
-    border-radius:0px 0px 5px 5px;
-    outline: 0px;
-  }
-QComboBox QAbstractItemView::item{
-	height:36px;
-	color: silver;
-	padding-left:9px;
-	background-color:#FFFFFF;
-}
- QComboBox QAbstractItemView::item:hover{ //Hover
-  background-color: silver;
-  color: black;
-}
- QComboBox QAbstractItemView::item:selected{//selected
-  background-color: red;
-  color: black;
-}
-QComboBox:on { 
-      padding-top: 3px;
-      padding-left: 4px;
-  }
-  QComboBox::down-arrow:on { 
-      top: 1px;
-      left: 1px;
-  }
-
-</string>
+           <string notr="true">QComboBox {
+        border-radius: 8px;
+        border: 1px solid black;
+        padding: 5px 15px;
+    }
+    QComboBox::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 15px;
+        border-left-width: 1px;
+        border-left-color: darkgray;
+        border-left-style: solid; /* just a single line */
+        border-top-right-radius: 3px; /* same radius as the QComboBox */
+        border-bottom-right-radius: 3px;
+    }
+    QComboBox::down-arrow {
+        image: url(down_arrow.png);
+    }
+    QComboBox:focus {
+        border: 1px solid yellow;
+    }
+    QComboBox::placeholder {
+        color: #767e89;
+    }</string>
           </property>
           <item>
            <property name="text">
@@ -4067,7 +3971,7 @@ QLineEdit::placeholder {
        <x>20</x>
        <y>290</y>
        <width>261</width>
-       <height>157</height>
+       <height>121</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -4126,19 +4030,6 @@ QLineEdit::placeholder {
         </property>
         <property name="text">
          <string>По правому краю</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="RBTableTextWidth">
-        <property name="font">
-         <font>
-          <family>Verdana</family>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>По ширине</string>
         </property>
        </widget>
       </item>
@@ -4481,7 +4372,7 @@ QLineEdit::placeholder {
        <x>470</x>
        <y>30</y>
        <width>438</width>
-       <height>71</height>
+       <height>74</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -4517,46 +4408,30 @@ QLineEdit::placeholder {
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">QComboBox{
-  padding: 1px 15px 1px 3px;
-  border:1px solid black;
-  border-radius:5px 5px 0px 0px;
-} 
-QComboBox::drop-down {
-      subcontrol-origin: padding;
-      subcontrol-position: top right;
-      border:none;
-  }
-QComboBox QAbstractItemView{
-	background: white;
-    border:1px solid black;
-    border-radius:0px 0px 5px 5px;
-    outline: 0px;
-  }
-QComboBox QAbstractItemView::item{
-	height:36px;
-	color: silver;
-	padding-left:9px;
-	background-color:#FFFFFF;
-}
- QComboBox QAbstractItemView::item:hover{ //Hover
-  background-color: silver;
-  color: black;
-}
- QComboBox QAbstractItemView::item:selected{//selected
-  background-color: red;
-  color: black;
-}
-QComboBox:on { 
-      padding-top: 3px;
-      padding-left: 4px;
-  }
-  QComboBox::down-arrow:on { 
-      top: 1px;
-      left: 1px;
-  }
-
-</string>
+           <string notr="true">QComboBox {
+        border-radius: 8px;
+        border: 1px solid black;
+        padding: 5px 15px;
+    }
+    QComboBox::drop-down {
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 15px;
+        border-left-width: 1px;
+        border-left-color: darkgray;
+        border-left-style: solid; /* just a single line */
+        border-top-right-radius: 3px; /* same radius as the QComboBox */
+        border-bottom-right-radius: 3px;
+    }
+    QComboBox::down-arrow {
+        image: url(down_arrow.png);
+    }
+    QComboBox:focus {
+        border: 1px solid yellow;
+    }
+    QComboBox::placeholder {
+        color: #767e89;
+    }</string>
           </property>
           <item>
            <property name="text">

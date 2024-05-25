@@ -1,7 +1,10 @@
 import sys
 
-from PyQt5 import uic, QtCore, QtWidgets
+from PyQt5 import (uic, QtCore, QtWidgets)
 from PyQt5.QtWidgets import QWidget, QApplication
+
+from uiSettings import Ui_Settings
+
 
 # from SettingsUi import Ui_Settings
 
@@ -9,94 +12,132 @@ from PyQt5.QtWidgets import QWidget, QApplication
 class SettingsWindow(QWidget):
     def __init__(self, *args):
         super(SettingsWindow, self).__init__()
-        uic.loadUi('SettingsUI.ui', self)  # Открытие файла ui
+        # self.ui = Ui_Settings()
+        # self.ui.setupUi(self)
+        self.ui = uic.loadUi('SettingsUI.ui', self)  # Открытие файла ui
         self.main = args[0]
-        self.btnGoBack.clicked.connect(self.goBack)     # Кнопка перехода обратно в основное меню
-        self.btnDefaultSettings.clicked.connect(self.setDefaultSettings)     # Кнопка установки базовых настроек
-        self.btnHelp.clicked.connect(self.main.openDocumentation)
+        self.ui.btnGoBack.clicked.connect(self.goBack)  # Кнопка перехода обратно в основное меню
+        self.ui.btnDefaultSettings.clicked.connect(self.setDefaultSettingsByScreen)  # Кнопка установки базовых настроек
+        self.ui.btnHelp.clicked.connect(self.main.openDocumentation)
+        self.ui.tabWidget.setCurrentIndex(0)
+        self.setDefaultSettings()
 
     def goBack(self):  # Вернуться назад в основное окно
         self.hide()
         self.main.show()
 
-    #  A: Работает только для блоков теста LineEdit, для других видов нужно доделывать
     def setDefaultSettings(self):  # Установка базовых настроек
-        _translate = QtCore.QCoreApplication.translate
-        self.LEFieldsBottom.setText(_translate("Settings", "3"))
-        self.LEFieldsTop.setText(_translate("Settings", "2"))
-        self.LEFieldsLeft.setText(_translate("Settings", "3"))
-        self.LEFieldsRight.setText(_translate("Settings", "1.5"))
-        # self.comboBox.setCurrentIndex(self.items.keys().index("Times New Roman"))
-        self.LEFieldsRight_2.setText(_translate("Settings", "1"))
-        self.LEFirstLvlSpacingAfter.setText(_translate("Settings", "12"))
-        self.LEFirstLvlSize.setText(_translate("Settings", "16"))
-        self.LEFirstLvlSpacingBefore.setText(_translate("Settings", "0"))
-        self.LESecondLvlSpacingBefore.setText(_translate("Settings", "12"))
-        self.LESecondLvlSize.setText(_translate("Settings", "14"))
-        self.LESecondLvlSpacingAfter.setText(_translate("Settings", "6"))
-        self.LEThirdLvlSpacingBefore.setText(_translate("Settings", "8"))
-        self.LEThirdLvlSize.setText(_translate("Settings", "13"))
-        self.LEThirdLvlSpacingAfter.setText(_translate("Settings", "4"))
+        self.setDefaultPage()
+        self.setDefaultHeadings()
+        self.setDefaultMainText()
+        self.setDefaultList()
+        self.setDefaultTable()
+        self.setDefaultTPicture()
 
-        # Доделать
-        self.CBLVL1NotSpacing.setText(_translate("Settings", "Не отрывать от след."))
-        self.CBLVL1NewPage.setText(_translate("Settings", "С новой страницы"))
-        self.CBLVL2NotSpacing.setText(_translate("Settings", "Не отрывать от след."))
-        self.CBLVL2NewPage.setText(_translate("Settings", "С новой страницы"))
-        self.CBLVL3NewPage.setText(_translate("Settings", "С новой страницы"))
-        self.CBLVL3NotSpacing.setText(_translate("Settings", "Не отрывать от след."))
-        self.checkBox_7.setText(_translate("Settings", "B"))
+    def setDefaultSettingsByScreen(self):
+        lst = [self.setDefaultPage,
+               self.setDefaultHeadings,
+               self.setDefaultMainText,
+               self.setDefaultList,
+               self.setDefaultTable,
+               self.setDefaultTPicture]
+        lst[self.tabWidget.currentIndex()]()
 
-        self.LEMainTextSpacingBefore.setText(_translate("Settings", "0"))
-        self.LEMainTextSpacingAfter.setText(_translate("Settings", "0"))
-        self.LEMainTextSize.setText(_translate("Settings", "13"))
-        self.LEMainTextSpacingBetween.setText(_translate("Settings", "1.5"))
-        self.LEMainTextSpacingParagraph.setText(_translate("Settings", "1,25"))
-        #  self.CBNumberedListType.setCurrentIndex(self.items.keys().index("1. 2. 3."))
-        #  self.CBNumberedListEndLetter.setCurrentIndex(self.items.keys().index("."))
+    def setDefaultPage(self):
+        self.ui.LEFieldsBottom.setText("3")
+        self.ui.LEFieldsTop.setText("2")
+        self.ui.LEFieldsLeft.setText("3")
+        self.ui.LEFieldsRight.setText("1.5")
 
-        # Доделать
-        self.CBNumberedListCapitalize.setText(_translate("Settings", "Начало с заглавной буквы"))
-        self.CBMarkedListType.setItemText(0, _translate("Settings", "-"))
-        self.CBMarkedListType.setItemText(1, _translate("Settings", "*"))
-        self.CBMarkedListType.setItemText(2, _translate("Settings", "◉"))
-        self.CBMarkedListType.setItemText(3, _translate("Settings", "●"))
+        self.ui.CBFontName.setCurrentIndex(0)
+        self.ui.btnNumerationDown.setChecked(True)
+        self.ui.CBFontName.setCurrentIndex(0)
 
-        self.labelSettings_92.setText(_translate("Settings", "Маркер"))
-        self.labelSettings_94.setText(_translate("Settings", "Маркированный список"))
-        self.labelSettings_93.setText(_translate("Settings", "Знак в конце"))
-        self.CBMarkedListEndLetter.setItemText(0, _translate("Settings", "."))
-        self.CBMarkedListEndLetter.setItemText(1, _translate("Settings", ":"))
-        self.CBMarkedListEndLetter.setItemText(2, _translate("Settings", ","))
-        self.CBMarkedListEndLetter.setItemText(3, _translate("Settings", "!"))
-        self.CBMarkedListEndLetter.setItemText(4, _translate("Settings", "?"))
-        self.CBMarkedListCapitalize.setText(_translate("Settings", "Начало с заглавной буквы"))
+    def setDefaultHeadings(self):
+        self.ui.LEFirstLvlSpacingAfter.setText("12")
+        self.ui.LEFirstLvlSize.setText("16")
+        self.ui.LEFirstLvlSpacingBefore.setText("0")
+        self.ui.LESecondLvlSpacingBefore.setText("12")
+        self.ui.LESecondLvlSize.setText("14")
+        self.ui.LESecondLvlSpacingAfter.setText("6")
+        self.ui.LEThirdLvlSpacingBefore.setText("8")
+        self.ui.LEThirdLvlSize.setText("13")
+        self.ui.LEThirdLvlSpacingAfter.setText("4")
 
-        self.LETableFontSize.setText(_translate("Settings", "12"))
-        self.CBTableParagraphBeforeTable.setText(_translate("Settings", "Абзац перед таблицей"))
-        self.CBTableFormatParagraph.setItemText(0, _translate("Settings", "Таблица <N> - <Название>."))
-        self.CBTableFormatParagraph.setItemText(1, _translate("Settings", "<Название>."))
-        self.LETableSpacingBefore.setText(_translate("Settings", "13"))
-        self.LETableSpacingAfter.setText(_translate("Settings", "0"))
-        self.LETabletSpacingBetween.setText(_translate("Settings", "1"))
-        self.LETableSpacingParagraph.setText(_translate("Settings", "0"))
-        self.LETableParagraphSpacingAfter.setText(_translate("Settings", "13"))
-        self.CBTableHeadingTop.setText(_translate("Settings", "Сверху"))
-        self.CBTableHeadingBottom.setText(_translate("Settings", "Сбоку"))
+        self.ui.CBLVL1NotSpacing.setChecked(True)
+        self.ui.CBLVL1NewPage.setChecked(True)
+        self.ui.CBLVL2NotSpacing.setChecked(True)
+        self.ui.CBLVL2NewPage.setChecked(False)
+        self.ui.CBLVL3NewPage.setChecked(False)
+        self.ui.CBLVL3NotSpacing.setChecked(True)
+        self.ui.CBLVL1Bold.setChecked(True)
+        self.ui.CBLVL1Italic.setChecked(False)
+        self.ui.CBLVL1Underline.setChecked(False)
+        self.ui.RBLVL1TextMiddle.setChecked(True)
+        self.ui.CBLVL2Bold.setChecked(True)
+        self.ui.CBLVL2Italic.setChecked(False)
+        self.ui.CBLVL2Underline.setChecked(False)
+        self.ui.RBLVL2TextMiddle.setChecked(True)
+        self.ui.CBLVL3Bold.setChecked(True)
+        self.ui.CBLVL3Italic.setChecked(False)
+        self.ui.CBLVL3Underline.setChecked(False)
+        self.ui.RBLVL3TextMiddle.setChecked(True)
 
-        self.LEPictureSpacingBefore.setText(_translate("Settings", "6"))
-        self.LEPictureSpacingAfter.setText(_translate("Settings", "0"))
-        self.LEPicturetSpacingParagraph.setText(_translate("Settings", "0"))
-        self.LEPictureSpacingBetween.setText(_translate("Settings", "1"))
-        self.CBPictureNotSpacing.setText(_translate("Settings", "Не отрывать от след."))
-        self.CBPictureTitle.setText(_translate("Settings", "Подпись под рисунком"))
-        self.CBPictureTitleFormat.setItemText(0, _translate("Settings", "Рисунок <N> - <Название>."))
-        self.CBPictureTitleFormat.setItemText(1, _translate("Settings", "<Название>."))
-        self.LEPictureTitleSpacingBefore.setText(_translate("Settings", "11"))
-        self.LEPictureTitleSpacingBefore_2.setText(_translate("Settings", "0"))
-        self.LEPictureTitleSpacingAfter.setText(_translate("Settings", "6"))
-        self.LEPictureTitleSpacingAfter_2.setText(_translate("Settings", "1"))
-        self.LEPictureTitleSpacingAfter_3.setText(_translate("Settings", "0"))
+    def setDefaultMainText(self):
+        self.ui.LEMainTextSpacingBefore.setText("0")
+        self.ui.LEMainTextSpacingAfter.setText("0")
+        self.ui.LEMainTextSize.setText("13")
+        self.ui.LEMainTextSpacingBetween.setText("1.5")
+        self.ui.LEMainTextSpacingParagraph.setText("1,25")
+
+        self.ui.CBMainTextBold.setChecked(False)
+        self.ui.CBMainTextItalic.setChecked(False)
+        self.ui.CBMainTextUnderline.setChecked(False)
+        self.ui.RBMainTextWidth.setChecked(True)
+
+    def setDefaultList(self):
+        pass
+
+    def setDefaultTable(self):
+        self.ui.LETableFontSize.setText("12")
+        self.ui.CBTableParagraphBeforeTable.setChecked(True)
+        self.ui.CBTableFormatParagraph.setCurrentIndex(0)
+
+        self.ui.LETableSpacingBefore.setText("13")
+        self.ui.LETableSpacingAfter.setText("0")
+        self.ui.LETabletSpacingBetween.setText("1")
+        self.ui.LETableSpacingParagraph.setText("0")
+        self.ui.LETableParagraphSpacingAfter.setText("13")
+
+        self.ui.CBTableHeadingTop.setChecked(True)
+        self.ui.CBTableHeadingLeft.setChecked(True)
+
+        self.ui.CBTableBold.setChecked(True)
+        self.ui.CBTableItalic.setChecked(False)
+        self.ui.CBTableUnderline.setChecked(False)
+        self.ui.RBTableTextMiddle.setChecked(True)
+
+    def setDefaultTPicture(self):
+        self.ui.LEPictureSpacingBefore.setText("6")
+        self.ui.LEPictureSpacingAfter.setText("0")
+        self.ui.LEPicturetSpacingParagraph.setText("0")
+        self.ui.LEPictureSpacingBetween.setText("1")
+
+        self.ui.CBPictureNotSpacing.setChecked(True)
+        self.ui.CBPictureTitle.setChecked(True)
+
+        self.ui.CBPictureTitleFormat.setCurrentIndex(0)
+        self.ui.LEPictureFontSize.setText("11")
+        self.ui.LEPictureTitleSpacingBefore.setText("0")
+        self.ui.LEPictureTitleSpacingAfter.setText("6")
+        self.ui.LEPictureTitleSpacingBetween.setText("1")
+        self.ui.LEPictureTitleSpacingFirstLine.setText("0")
+
+        self.ui.RBPictureMiddle.setChecked(True)
+        self.ui.RBPictureTitleMiddle.setChecked(True)
+        self.ui.CBPictureTitleUnderline.setChecked(False)
+        self.ui.CBPictureTitleItalic.setChecked(True)
+        self.ui.CBPictureTitleBold.setChecked(True)
 
 
 def except_hook(cls, exception, traceback):
