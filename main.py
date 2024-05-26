@@ -61,6 +61,7 @@ class MainWindow(QMainWindow):
 
     def chooseFile(self):  # Выбор файла
         dialog = QFileDialog.getOpenFileNames(self, "Выбор файла", "", "*.docx")
+
         if dialog[0]:
             for filename in dialog[0]:
                 file, extension = os.path.splitext(filename)
