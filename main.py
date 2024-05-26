@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT as WD_ALIGN_PARAGRAPH
@@ -63,12 +64,11 @@ class MainWindow(QMainWindow):
         if self.isActiveWindow():
             self.proc = subprocess.Popen("hh.exe -mapid" + "100" + " HelpMenu.chm")
         else:
-            self.proc = subprocess.Popen("hh.exe -mapid" + "20" + str(self.SettingsWindow.ui.tabWidget.currentIndex() + 1) + " HelpMenu.chm")
+            self.proc = subprocess.Popen("hh.exe -mapid" + "20" + str(self.SettingsWindow.ui.tabWidget.currentIndex() + 1) + " Help Menu.chm")
 
     def openExplorer(self):
         if self.explorer is not None:
             self.explorer.kill()
-        self.explorer = subprocess.Popen('explorer "/Results"')
 
     def chooseFile(self):  # Выбор файла
         self.ui.LEResLine.hide()
@@ -92,6 +92,8 @@ class MainWindow(QMainWindow):
     def runCheckingCorrectness(self):  # Запуск проверки корректности
         if self.fileFlag:
             self.getSettings()
+            self.ui.LEResLine.setText(f"Проверено файлов: 0")
+            self.ui.LEResLine.show()
             for filename in self.fileNames:
                 file, extension = os.path.splitext(filename)
                 if extension == ".docx":
@@ -100,10 +102,7 @@ class MainWindow(QMainWindow):
                                  self.table_checklist, self.list_checklist, self.page_checklist, self.picture_checklist,
                                  self.title_picture_checklist)
                     parse_document(filename)
-
-
-            self.ui.LEResLine.setText(f"Проверено файлов: {len(self.fileNames)}")
-            self.ui.LEResLine.show()
+                self.ui.LEResLine.setText(f"Проверено файлов: {len(self.fileNames)}")
             self.ui.btnOpenRes.show()
             self.clearFiles()
         else:
