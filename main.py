@@ -132,7 +132,7 @@ class MainWindow(QMainWindow):
 
         self.text_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),
-            "font_size": self.SettingsWindow.ui.LEMainTextSize.text(),
+            "font_size": float(self.SettingsWindow.ui.LEMainTextSize.text()),
             "font_bald": self.SettingsWindow.ui.CBMainTextBold.isChecked(),
             "font_italic": self.SettingsWindow.ui.CBMainTextItalic.isChecked(),
             "font_underline": self.SettingsWindow.ui.CBMainTextUnderline.isChecked(),
@@ -141,12 +141,12 @@ class MainWindow(QMainWindow):
             "alignment": alignment,
             "keep_with_next": False,  # нет такого в UI, false по умолчанию для main текста
             "page_break_before": False,  # нет такого в UI, false по умолчанию для main текста
-            "space_before": self.SettingsWindow.ui.LEMainTextSpacingBefore.text(),
-            "space_after": self.SettingsWindow.ui.LEMainTextSpacingAfter.text(),
+            "space_before": float(self.SettingsWindow.ui.LEMainTextSpacingBefore.text()),
+            "space_after": float(self.SettingsWindow.ui.LEMainTextSpacingAfter.text()),
             "left_indent": 0,  # нет такого в UI
             "right_indent": 0,  # нет такого в UI
-            "first_line_indent": self.SettingsWindow.ui.LEMainTextSpacingParagraph.text(),
-            "line_spacing": self.SettingsWindow.ui.LEMainTextSpacingBetween.text(),
+            "first_line_indent": float(self.SettingsWindow.ui.LEMainTextSpacingParagraph.text()),
+            "line_spacing": float(self.SettingsWindow.ui.LEMainTextSpacingBetween.text()),
         }
 
     def getHeading1Settings(self):
@@ -162,7 +162,7 @@ class MainWindow(QMainWindow):
 
         self.heading1_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),
-            "font_size": self.SettingsWindow.ui.LEFirstLvlSize.text(),
+            "font_size": float(self.SettingsWindow.ui.LEFirstLvlSize.text()),
             "font_bald": self.SettingsWindow.ui.CBLVL1Bold.isChecked(),
             "font_italic": self.SettingsWindow.ui.CBLVL1Italic.isChecked(),
             "font_underline": self.SettingsWindow.ui.CBLVL1Underline.isChecked(),
@@ -171,8 +171,8 @@ class MainWindow(QMainWindow):
             "alignment": alignment,
             "keep_with_next": self.SettingsWindow.ui.CBLVL1NotSpacing.isChecked(),
             "page_break_before": self.SettingsWindow.ui.CBLVL1NewPage.isChecked(),  # нет такого в UI, false по умолчанию для main текста
-            "space_before": self.SettingsWindow.ui.LEFirstLvlSpacingBefore.text(),
-            "space_after": self.SettingsWindow.ui.LEFirstLvlSpacingAfter.text(),
+            "space_before": float(self.SettingsWindow.ui.LEFirstLvlSpacingBefore.text()),
+            "space_after": float(self.SettingsWindow.ui.LEFirstLvlSpacingAfter.text()),
             "left_indent": 0,  # нет такого в UI
             "right_indent": 0,  # нет такого в UI
             "first_line_indent": 0,  # нет такого в UI
@@ -193,7 +193,7 @@ class MainWindow(QMainWindow):
 
         self.heading2_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),
-            "font_size": self.SettingsWindow.ui.LESecondLvlSize.text(),
+            "font_size": float(self.SettingsWindow.ui.LESecondLvlSize.text()),
             "font_bald": self.SettingsWindow.ui.CBLVL2Bold.isChecked(),
             "font_italic": self.SettingsWindow.ui.CBLVL2Italic.isChecked(),
             "font_underline": self.SettingsWindow.ui.CBLVL2Underline.isChecked(),
@@ -202,8 +202,8 @@ class MainWindow(QMainWindow):
             "alignment": alignment,
             "keep_with_next": self.SettingsWindow.ui.CBLVL2NotSpacing.isChecked(),
             "page_break_before": self.SettingsWindow.ui.CBLVL2NewPage.isChecked(),  # нет такого в UI, false по умолчанию для main текста
-            "space_before": self.SettingsWindow.ui.LESecondLvlSpacingBefore.text(),
-            "space_after": self.SettingsWindow.ui.LESecondLvlSpacingAfter.text(),
+            "space_before": float(self.SettingsWindow.ui.LESecondLvlSpacingBefore.text()),
+            "space_after": float(self.SettingsWindow.ui.LESecondLvlSpacingAfter.text()),
             "left_indent": 0,  # нет такого в UI
             "right_indent": 0,  # нет такого в UI
             "first_line_indent": 0,  # нет такого в UI
@@ -224,7 +224,7 @@ class MainWindow(QMainWindow):
 
         self.heading3_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),
-            "font_size": self.SettingsWindow.ui.LEThirdLvlSize.text(),
+            "font_size": float(self.SettingsWindow.ui.LEThirdLvlSize.text()),
             "font_bald": self.SettingsWindow.ui.CBLVL3Bold.isChecked(),
             "font_italic": self.SettingsWindow.ui.CBLVL3Italic.isChecked(),
             "font_underline": self.SettingsWindow.ui.CBLVL3Underline.isChecked(),
@@ -233,8 +233,8 @@ class MainWindow(QMainWindow):
             "alignment": alignment,
             "keep_with_next": self.SettingsWindow.ui.CBLVL3NotSpacing.isChecked(),
             "page_break_before": self.SettingsWindow.ui.CBLVL3NewPage.isChecked(),  # нет такого в UI, false по умолчанию для main текста
-            "space_before": self.SettingsWindow.ui.LEThirdLvlSpacingBefore.text(),
-            "space_after": self.SettingsWindow.ui.LEThirdLvlSpacingAfter.text(),
+            "space_before": float(self.SettingsWindow.ui.LEThirdLvlSpacingBefore.text()),
+            "space_after": float(self.SettingsWindow.ui.LEThirdLvlSpacingAfter.text()),
             "left_indent": 0,  # нет такого в UI
             "right_indent": 0,  # нет такого в UI
             "first_line_indent": 0,  # нет такого в UI
@@ -258,10 +258,10 @@ class MainWindow(QMainWindow):
             orientation = WD_ORIENTATION.LANDSCAPE
 
         self.page_checklist = {
-            "top_margin": self.SettingsWindow.ui.LEFieldsTop.text(),  # Поля страницы (верхнее)
-            "bottom_margin": self.SettingsWindow.ui.LEFieldsBottom.text(),  # Поля страницы (нижнее)
-            "left_margin": self.SettingsWindow.ui.LEFieldsLeft.text(),  # Поля страницы (левое)
-            "right_margin": self.SettingsWindow.ui.LEFieldsRight.text(),  # Поля страницы (правое)
+            "top_margin": float(self.SettingsWindow.ui.LEFieldsTop.text()),  # Поля страницы (верхнее)
+            "bottom_margin": float(self.SettingsWindow.ui.LEFieldsBottom.text()),  # Поля страницы (нижнее)
+            "left_margin": float(self.SettingsWindow.ui.LEFieldsLeft.text()),  # Поля страницы (левое)
+            "right_margin": float(self.SettingsWindow.ui.LEFieldsRight.text()),  # Поля страницы (правое)
             "NumberingPosition": numbering_position,  # Позиция нумерации (сверху, снизу, справа, слева)
             "NumberingStartFrom": self.SettingsWindow.ui.LENumerationStartFrom.text(),  # Число, с которого начинается нумерация
             "orientation": orientation
@@ -299,15 +299,15 @@ class MainWindow(QMainWindow):
 
         self.table_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт
-            "font_size": self.SettingsWindow.ui.LETableFontSize.text(),  # Размер шрифта в таблице
+            "font_size": float(self.SettingsWindow.ui.LETableFontSize.text()),  # Размер шрифта в таблице
             "paragraph_before_table": self.SettingsWindow.ui.CBTableParagraphBeforeTable.isChecked(),  # Параграф перед таблицей
-            "space_before": self.SettingsWindow.ui.LETableSpacingBefore.text(),
-            "space_after": self.SettingsWindow.ui.LETableSpacingAfter.text(),
+            "space_before": float(self.SettingsWindow.ui.LETableSpacingBefore.text()),
+            "space_after": float(self.SettingsWindow.ui.LETableSpacingAfter.text()),
             "left_indent": 0,  # нет такого в UI
             "right_indent": 0,  # нет такого в UI
-            "first_line_indent": self.SettingsWindow.ui.LETableSpacingParagraph.text(),
-            "line_spacing": self.SettingsWindow.ui.LETabletSpacingBetween.text(),
-            "spacing_under_paragraph_after_table": self.SettingsWindow.ui.LETableParagraphSpacingAfter.text(),  # Интервал абзаца после таблицы
+            "first_line_indent": float(self.SettingsWindow.ui.LETableSpacingParagraph.text()),
+            "line_spacing": float(self.SettingsWindow.ui.LETabletSpacingBetween.text()),
+            "spacing_under_paragraph_after_table": float(self.SettingsWindow.ui.LETableParagraphSpacingAfter.text()),  # Интервал абзаца после таблицы
             "alignment": alignment,
             "vertical_alignment": vertical_alignment
         }
@@ -346,23 +346,23 @@ class MainWindow(QMainWindow):
         self.picture_checklist = {
             "alignment": picture_alignment,  # Выравнивание картинки
             "keep_with_next": self.SettingsWindow.ui.CBPictureNotSpacing.isChecked(),  # Не отрывать рисунок от подписи
-            "space_before": self.SettingsWindow.ui.LEPictureSpacingBefore.text(),
-            "space_after": self.SettingsWindow.ui.LEPictureSpacingAfter.text(),
-            "first_line_indent": self.SettingsWindow.ui.LEPicturetSpacingParagraph.text(),
-            "line_spacing": self.SettingsWindow.ui.LEPictureSpacingBetween.text(),
+            "space_before": float(self.SettingsWindow.ui.LEPictureSpacingBefore.text()),
+            "space_after": float(self.SettingsWindow.ui.LEPictureSpacingAfter.text()),
+            "first_line_indent": float(self.SettingsWindow.ui.LEPicturetSpacingParagraph.text()),
+            "line_spacing": float(self.SettingsWindow.ui.LEPictureSpacingBetween.text()),
         }
 
         self.title_picture_checklist = {
             "enable_pic_title": self.SettingsWindow.ui.CBPictureTitle.isChecked(),
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт подписи под рисунком
-            "font_size": self.SettingsWindow.ui.LEPictureFontSize.text(),  # Размер подписи под рисунком
+            "font_size": float(self.SettingsWindow.ui.LEPictureFontSize.text()),  # Размер подписи под рисунком
             "font_bald": self.SettingsWindow.ui.CBPictureTitleBold.isChecked(),  # Выделение жирным шрифтом
             "font_italic": self.SettingsWindow.ui.CBPictureTitleItalic.isChecked(),  # Выделение курсовом
             "font_underline": self.SettingsWindow.ui.CBPictureTitleUnderline.isChecked(),  # Выделение подчеркиванием
-            "space_before": self.SettingsWindow.ui.LEPictureTitleSpacingBefore.text(),  # интервал перед подписью
-            "space_after": self.SettingsWindow.ui.LEPictureTitleSpacingAfter.text(),  # интервал после подписи
-            "first_line_indent": self.SettingsWindow.ui.LEPictureTitleSpacingFirstLine.text(),  # Абзацный отступ
-            "line_spacing": self.SettingsWindow.ui.LEPictureTitleSpacingBetween.text(),  # Междустрочный интервал
+            "space_before": float(self.SettingsWindow.ui.LEPictureTitleSpacingBefore.text()),  # интервал перед подписью
+            "space_after": float(self.SettingsWindow.ui.LEPictureTitleSpacingAfter.text()),  # интервал после подписи
+            "first_line_indent": float(self.SettingsWindow.ui.LEPictureTitleSpacingFirstLine.text()),  # Абзацный отступ
+            "line_spacing": float(self.SettingsWindow.ui.LEPictureTitleSpacingBetween.text()),  # Междустрочный интервал
             "alignment": title_alignment,  # Выравнивание подписи
             "format_regex": self.SettingsWindow.ui.CBPictureTitleFormat.currentText()  # Формат подписи (Рисунок <N> - <Название>.)
         }
