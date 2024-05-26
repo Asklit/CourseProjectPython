@@ -11,6 +11,7 @@ from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT as WD_ALIGN_VERTICAL
 from docx.enum.section import WD_ORIENTATION
 from docx import Document
 
+from docxParser import set_settings, parse_document
 # from uiMain import Ui_Checker
 
 
@@ -80,7 +81,18 @@ class MainWindow(QMainWindow):
     def runCheckingCorrectness(self):  # Запуск проверки корректности
         if self.fileFlag:
             self.getSettings()
+            for filename in self.fileNames:
+                file, extension = os.path.splitext(filename)
+                if extension == ".docx":
+                    doc = Document(filename)
+                    set_settings(self.text_checklist, self.heading1_checklist, self.heading2_checklist,
+                                 self.heading3_checklist, self.table_title_checklist, self.table_heading_checklist,
+                                 self.table_checklist, self.list_checklist, self.page_checklist, self.picture_checklist,
+                                 self.title_picture_checklist)
+                    parse_document(doc)
 
+
+            print(self.fileNames)
             print(self.text_checklist)
             print(self.heading1_checklist)
             print(self.heading2_checklist)
