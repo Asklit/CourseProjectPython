@@ -4,12 +4,14 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
-from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT as WD_ALIGN_PARAGRAPH
 from settings import SettingsWindow
 import keyboard
 from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT as WD_ALIGN_VERTICAL
 from docx.enum.section import WD_ORIENTATION
+from docx import Document
 
+from docxParser import parse_document
 # from uiMain import Ui_Checker
 
 
@@ -68,6 +70,7 @@ class MainWindow(QMainWindow):
     def runCheckingCorrectness(self):  # Запуск проверки корректности
         if self.fileFlag:
             self.getSettings()
+
             print(self.text_checklist)
             print(self.heading1_checklist)
             print(self.heading2_checklist)
@@ -326,6 +329,7 @@ class MainWindow(QMainWindow):
         }
 
         self.title_picture_checklist = {
+            "enable_pic_title": self.SettingsWindow.ui.CBPictureTitle.isChecked(),
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт подписи под рисунком
             "font_size": self.SettingsWindow.ui.LEPictureFontSize.text(),  # Размер подписи под рисунком
             "font_bald": self.SettingsWindow.ui.CBPictureTitleBold.isChecked(),  # Выделение жирным шрифтом
