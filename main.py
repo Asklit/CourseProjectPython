@@ -97,6 +97,7 @@ class MainWindow(QMainWindow):
             self.getSettings()
             self.ui.LEResLine.setText(f"Проверено файлов: 0")
             self.ui.LEResLine.show()
+            count = 0
             for filename in self.fileNames:
                 file, extension = os.path.splitext(filename)
                 if extension == ".docx":
@@ -105,7 +106,8 @@ class MainWindow(QMainWindow):
                                  self.table_checklist, self.list_checklist, self.page_checklist, self.picture_checklist,
                                  self.title_picture_checklist)
                     parse_document(filename)
-                self.ui.LEResLine.setText(f"Проверено файлов: {len(self.fileNames)}")
+                count += 1
+                self.ui.LEResLine.setText(f"Проверено файлов: {count}")
             self.ui.btnOpenRes.show()
             self.clearFiles()
         else:
