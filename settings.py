@@ -1,6 +1,8 @@
 import sys
 
 from PyQt5 import (uic, QtCore, QtWidgets)
+from PyQt5.QtCore import QRegExp
+from PyQt5.QtGui import QIntValidator, QDoubleValidator, QRegExpValidator
 from PyQt5.QtWidgets import QWidget, QApplication
 
 # from uiSettings import Ui_Settings
@@ -21,6 +23,12 @@ class SettingsWindow(QWidget):
         self.ui.btnHelp.clicked.connect(self.main.openDocumentation)
         self.ui.tabWidget.setCurrentIndex(0)
         self.setDefaultSettings()
+
+        # self.onlyInt = QIntValidator()
+        # self.onlyInt.setRange(0, 30)
+        # self.onlyFloat = QRegExpValidator(QRegExp("([0-9]:2,[0-9]:2|[0-9]:2.[0-9]:2)"))
+
+        self.setValidators()
 
     def goBack(self):  # Вернуться назад в основное окно
         self.hide()
@@ -44,7 +52,7 @@ class SettingsWindow(QWidget):
         lst[self.tabWidget.currentIndex()]()
 
     def setDefaultPage(self):
-        self.ui.LEFieldsBottom.setText("3")
+        self.ui.LEFieldsBottom.setText("2")
         self.ui.LEFieldsTop.setText("2")
         self.ui.LEFieldsLeft.setText("3")
         self.ui.LEFieldsRight.setText("1.5")
@@ -145,6 +153,47 @@ class SettingsWindow(QWidget):
         self.ui.CBPictureTitleUnderline.setChecked(False)
         self.ui.CBPictureTitleItalic.setChecked(True)
         self.ui.CBPictureTitleBold.setChecked(True)
+
+    def setValidators(self):
+        regex = QRegExpValidator(QRegExp("^([1-9][0-9]?|0)(\\.)[0-9]{2}$"))
+        self.ui.LEFieldsBottom.setValidator(regex)
+        self.ui.LEFieldsTop.setValidator(regex)
+        self.ui.LEFieldsLeft.setValidator(regex)
+        self.ui.LEFieldsRight.setValidator(regex)
+
+        self.ui.LEFirstLvlSpacingAfter.setValidator(regex)
+        self.ui.LEFirstLvlSize.setValidator(regex)
+        self.ui.LEFirstLvlSpacingBefore.setValidator(regex)
+        self.ui.LESecondLvlSpacingBefore.setValidator(regex)
+        self.ui.LESecondLvlSize.setValidator(regex)
+        self.ui.LESecondLvlSpacingAfter.setValidator(regex)
+        self.ui.LEThirdLvlSpacingBefore.setValidator(regex)
+        self.ui.LEThirdLvlSize.setValidator(regex)
+        self.ui.LEThirdLvlSpacingAfter.setValidator(regex)
+
+        self.ui.LEMainTextSpacingBefore.setValidator(regex)
+        self.ui.LEMainTextSpacingAfter.setValidator(regex)
+        self.ui.LEMainTextSize.setValidator(regex)
+        self.ui.LEMainTextSpacingBetween.setValidator(regex)
+        self.ui.LEMainTextSpacingParagraph.setValidator(regex)
+
+        self.ui.LETableFontSize.setValidator(regex)
+
+        self.ui.LETableSpacingBefore.setValidator(regex)
+        self.ui.LETableSpacingAfter.setValidator(regex)
+        self.ui.LETabletSpacingBetween.setValidator(regex)
+        self.ui.LETableSpacingParagraph.setValidator(regex)
+        self.ui.LETableParagraphSpacingAfter.setValidator(regex)
+
+        self.ui.LEPictureSpacingBefore.setValidator(regex)
+        self.ui.LEPictureSpacingAfter.setValidator(regex)
+        self.ui.LEPicturetSpacingParagraph.setValidator(regex)
+        self.ui.LEPictureSpacingBetween.setValidator(regex)
+        self.ui.LEPictureFontSize.setValidator(regex)
+        self.ui.LEPictureTitleSpacingBefore.setValidator(regex)
+        self.ui.LEPictureTitleSpacingAfter.setValidator(regex)
+        self.ui.LEPictureTitleSpacingBetween.setValidator(regex)
+        self.ui.LEPictureTitleSpacingFirstLine.setValidator(regex)
 
 
 def except_hook(cls, exception, traceback):
