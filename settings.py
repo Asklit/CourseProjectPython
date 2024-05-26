@@ -52,6 +52,7 @@ class SettingsWindow(QWidget):
         self.ui.CBFontName.setCurrentIndex(0)
         self.ui.btnNumerationDown.setChecked(True)
         self.ui.CBFontName.setCurrentIndex(0)
+        self.ui.PortraitOrientation.setChecked(True)
 
     def setDefaultHeadings(self):
         self.ui.LEFirstLvlSpacingAfter.setText("12")
@@ -63,6 +64,10 @@ class SettingsWindow(QWidget):
         self.ui.LEThirdLvlSpacingBefore.setText("8")
         self.ui.LEThirdLvlSize.setText("13")
         self.ui.LEThirdLvlSpacingAfter.setText("4")
+
+        self.ui.CBLVL1CheckNumeration.setChecked(True)
+        self.ui.CBLVL2CheckNumeration.setChecked(True)
+        self.ui.CBLVL3CheckNumeration.setChecked(True)
 
         self.ui.CBLVL1NotSpacing.setChecked(True)
         self.ui.CBLVL1NewPage.setChecked(True)
@@ -115,7 +120,9 @@ class SettingsWindow(QWidget):
         self.ui.CBTableBold.setChecked(True)
         self.ui.CBTableItalic.setChecked(False)
         self.ui.CBTableUnderline.setChecked(False)
-        self.ui.RBTableTextMiddle.setChecked(True)
+        self.ui.RBTableTextMiddle_2.setChecked(True)
+        self.ui.RBTableTextLeft.setChecked(True)
+        self.ui.RBTableHeadingTextMiddle.setChecked(True)
 
     def setDefaultTPicture(self):
         self.ui.LEPictureSpacingBefore.setText("6")

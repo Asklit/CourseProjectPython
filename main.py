@@ -7,6 +7,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from settings import SettingsWindow
 import keyboard
+from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT as WD_ALIGN_VERTICAL
+from docx.enum.section import WD_ORIENTATION
 
 # from uiMain import Ui_Checker
 
@@ -77,9 +79,6 @@ class MainWindow(QMainWindow):
             print(self.page_checklist)
             print(self.picture_checklist)
             print(self.title_picture_checklist)
-
-
-
         else:
             self.ui.LEErrorLine.show()  # Вывод сообщения об отсутствии выбранных файлов
 
@@ -151,6 +150,7 @@ class MainWindow(QMainWindow):
             "right_indent": 0,  # нет такого в UI
             "first_line_indent": 0,  # нет такого в UI
             "line_spacing": 1.0,  # нет такого в UI
+            "is_list":  self.SettingsWindow.ui.CBLVL1CheckNumeration.isChecked()
         }
 
     def getHeading2Settings(self):
@@ -181,6 +181,7 @@ class MainWindow(QMainWindow):
             "right_indent": 0,  # нет такого в UI
             "first_line_indent": 0,  # нет такого в UI
             "line_spacing": 1.0,  # нет такого в UI
+            "is_list": self.SettingsWindow.ui.CBLVL2CheckNumeration.isChecked()
         }
 
     def getHeading3Settings(self):
@@ -211,6 +212,7 @@ class MainWindow(QMainWindow):
             "right_indent": 0,  # нет такого в UI
             "first_line_indent": 0,  # нет такого в UI
             "line_spacing": 1.0,  # нет такого в UI
+            "is_list": self.SettingsWindow.ui.CBLVL3CheckNumeration.isChecked()
         }
 
     def getPageSettings(self):
@@ -224,13 +226,18 @@ class MainWindow(QMainWindow):
         elif self.SettingsWindow.ui.btnNumerationRight.isChecked():
             numbering_position = "Right"
 
+        orientation = WD_ORIENTATION.PORTRAIT
+        if self.SettingsWindow.ui.LandscapeOrientation.isChecked():
+            orientation = WD_ORIENTATION.LANDSCAPE
+
         self.page_checklist = {
             "top_margin": self.SettingsWindow.ui.LEFieldsTop.text(),  # Поля страницы (верхнее)
             "bottom_margin": self.SettingsWindow.ui.LEFieldsBottom.text(),  # Поля страницы (нижнее)
             "left_margin": self.SettingsWindow.ui.LEFieldsLeft.text(),  # Поля страницы (левое)
             "right_margin": self.SettingsWindow.ui.LEFieldsRight.text(),  # Поля страницы (правое)
             "NumberingPosition": numbering_position,  # Позиция нумерации (сверху, снизу, справа, слева)
-            "NumberingStartFrom": self.SettingsWindow.ui.LENumerationStartFrom.text()  # Число, с которого начинается нумерация
+            "NumberingStartFrom": self.SettingsWindow.ui.LENumerationStartFrom.text(),  # Число, с которого начинается нумерация
+            "orientation": orientation
         }
 
     def getListSettings(self):
@@ -240,14 +247,28 @@ class MainWindow(QMainWindow):
 
     def getTableSettings(self):
         alignment = WD_ALIGN_PARAGRAPH.LEFT
-        if self.SettingsWindow.ui.RBLVL3TextLeft.isChecked():
+        if self.SettingsWindow.ui.RBTableTextLeft.isChecked():
             alignment = WD_ALIGN_PARAGRAPH.LEFT
-        elif self.SettingsWindow.ui.RBLVL3TextRight.isChecked():
+        elif self.SettingsWindow.ui.RBTableTextRight.isChecked():
             alignment = WD_ALIGN_PARAGRAPH.RIGHT
         elif self.SettingsWindow.ui.RBLVL3TextMiddle.isChecked():
             alignment = WD_ALIGN_PARAGRAPH.CENTER
-        elif self.SettingsWindow.ui.RBLVL3TextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+
+        vertical_alignment = WD_ALIGN_PARAGRAPH.CENTER
+        if self.SettingsWindow.ui.RBTableTextTop.isChecked():
+            vertical_alignment = WD_ALIGN_VERTICAL.TOP
+        elif self.SettingsWindow.ui.RBTableTextMiddle_2.isChecked():
+            vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        elif self.SettingsWindow.ui.RBTableTextBottom.isChecked():
+            vertical_alignment = WD_ALIGN_VERTICAL.BOTTOM
+
+        heading_alignment = WD_ALIGN_PARAGRAPH.CENTER
+        if self.SettingsWindow.ui.RBTableHeadingTextLeft.isChecked():
+            heading_alignment = WD_ALIGN_PARAGRAPH.LEFT
+        elif self.SettingsWindow.ui.RBTableHeadingTextRight.isChecked():
+            heading_alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        elif self.SettingsWindow.ui.RBTableHeadingTextMiddle.isChecked():
+            heading_alignment = WD_ALIGN_PARAGRAPH.CENTER
 
         self.table_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт
@@ -259,7 +280,9 @@ class MainWindow(QMainWindow):
             "right_indent": 0,  # нет такого в UI
             "first_line_indent": self.SettingsWindow.ui.LETableSpacingParagraph.text(),
             "line_spacing": self.SettingsWindow.ui.LETabletSpacingBetween.text(),
-            "spacing_under_paragraph_after_table": self.SettingsWindow.ui.LETableParagraphSpacingAfter.text()  # Интервал абзаца после таблицы
+            "spacing_under_paragraph_after_table": self.SettingsWindow.ui.LETableParagraphSpacingAfter.text(),  # Интервал абзаца после таблицы
+            "alignment": alignment,
+            "vertical_alignment": vertical_alignment
         }
 
         self.table_title_checklist = {
@@ -272,7 +295,8 @@ class MainWindow(QMainWindow):
             "font_underline": self.SettingsWindow.ui.CBTableUnderline.isChecked(),  # Подчеркивание заголовков
             "heading_left": self.SettingsWindow.ui.CBTableHeadingLeft.isChecked(),  # Необходимость заголовков слева
             "heading_top": self.SettingsWindow.ui.CBTableHeadingTop.isChecked(),  # Необходимость заголовков сверху
-            "alignment": alignment
+            "alignment": heading_alignment,
+            "vertical_alignment": vertical_alignment
             }
 
     def getPictureSettings(self):
