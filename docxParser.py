@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 import docx.document
 import xml.etree.ElementTree as ET
 from docx.api import Document
@@ -497,7 +500,9 @@ def set_comment_name(name, prev_name, is_locked):
         return name
     return prev_name
 
-def parse_document(document):
+
+def parse_document(filename):
+    document = Document(filename)
     comment_count = 0
     written_comments = []
     paragraph_to_comment = ""
@@ -627,7 +632,22 @@ def parse_document(document):
         comment_count += 1
         written_comments.append(comment_to_send)
 
-    document.save("result.docx")
+    file, extension = os.path.splitext(filename)
+    basename, extension = os.path.splitext(os.path.basename(filename))
+    try:
+        Path('./Results').mkdir(parents=True, exist_ok=False)
+    except FileExistsError:
+        pass
+    count = 0
+    while True:
+        try:
+            if count == 0:
+                document.save(f"Results/{basename}_Проверенный{extension}")
+            else:
+                document.save(f"Results/{basename}_Проверенный_{count}{extension}")
+            break
+        except PermissionError:
+            count += 1
     return written_comments
 
 

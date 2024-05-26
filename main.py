@@ -95,12 +95,11 @@ class MainWindow(QMainWindow):
             for filename in self.fileNames:
                 file, extension = os.path.splitext(filename)
                 if extension == ".docx":
-                    doc = Document(filename)
                     set_settings(self.text_checklist, self.heading1_checklist, self.heading2_checklist,
                                  self.heading3_checklist, self.table_title_checklist, self.table_heading_checklist,
                                  self.table_checklist, self.list_checklist, self.page_checklist, self.picture_checklist,
                                  self.title_picture_checklist)
-                    parse_document(doc)
+                    parse_document(filename)
 
 
             self.ui.LEResLine.setText(f"Проверено файлов: {len(self.fileNames)}")
