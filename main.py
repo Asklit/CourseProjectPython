@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import pathlib
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
@@ -40,6 +41,7 @@ class MainWindow(QMainWindow):
 
         self.proc = None
         self.explorer = None
+        self.file_path = pathlib.Path(__file__).parent.resolve()
 
         self.ui.LEResLine.hide()
         self.ui.btnOpenRes.hide()
@@ -68,7 +70,8 @@ class MainWindow(QMainWindow):
     def openExplorer(self):
         if self.explorer is not None:
             self.explorer.kill()
-        self.explorer = subprocess.Popen('explorer "/Results"')
+
+        self.explorer = subprocess.Popen(f'explorer "{self.file_path}\Results"')
 
     def chooseFile(self):  # Выбор файла
         self.ui.LEResLine.hide()
