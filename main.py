@@ -48,6 +48,8 @@ class MainWindow(QMainWindow):
         self.ui.btnSettings.clicked.connect(self.setupSettings)    # Кнопка перехода к настройкам
         self.ui.btnHelp.clicked.connect(self.openDocumentation)
 
+        self.ui.btnClearFiles.clicked.connect(self.clearFiles)
+
     def openDocumentation(self):
         if self.proc is not None:
             self.proc.kill()
@@ -60,10 +62,18 @@ class MainWindow(QMainWindow):
     def chooseFile(self):  # Выбор файла
         dialog = QFileDialog.getOpenFileNames(self, "Выбор файла", "", "*.docx")
         if dialog[0]:
-            self.fileFlag = True
-            self.ui.LENameFile.setText(f"Выбрано файлов: {len(dialog[0])} ")
-            self.fileNames = dialog[0]
-            self.ui.LEErrorLine.hide()
+            for filename in dialog[0]:
+                file, extension = os.path.splitext(filename)
+                if extension == ".docx" and filename not in self.fileNames:
+                    self.fileFlag = True
+                    self.fileNames.append(filename)
+                    self.ui.LENameFile.setText(f"Выбрано файлов: {len(self.fileNames)} ")
+                    self.ui.LEErrorLine.hide()
+
+    def clearFiles(self):
+        self.ui.LENameFile.setText(f"Файлы не выбраны")
+        self.fileFlag = False
+        self.fileNames = []
 
     def runCheckingCorrectness(self):  # Запуск проверки корректности
         if self.fileFlag:
@@ -79,6 +89,8 @@ class MainWindow(QMainWindow):
             print(self.page_checklist)
             print(self.picture_checklist)
             print(self.title_picture_checklist)
+
+            print(self.fileNames)
         else:
             self.ui.LEErrorLine.show()  # Вывод сообщения об отсутствии выбранных файлов
 
