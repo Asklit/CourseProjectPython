@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
     def openExplorer(self):
         if self.explorer is not None:
             self.explorer.kill()
-        self.explorer = subprocess.Popen('explorer "F:\data"')
+        self.explorer = subprocess.Popen('explorer "/Results"')
 
     def chooseFile(self):  # Выбор файла
         self.ui.LEResLine.hide()
