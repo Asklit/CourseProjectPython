@@ -39,6 +39,10 @@ class MainWindow(QMainWindow):
         self.table_title_checklist = None
 
         self.proc = None
+        self.explorer = None
+
+        self.ui.LEResLine.hide()
+        self.ui.btnOpenRes.hide()
 
         keyboard.add_hotkey("f1", self.openDocumentation)
 
@@ -49,7 +53,7 @@ class MainWindow(QMainWindow):
         self.ui.btnRun.clicked.connect(self.runCheckingCorrectness)    # Кнопка запуска проверки файла
         self.ui.btnSettings.clicked.connect(self.setupSettings)    # Кнопка перехода к настройкам
         self.ui.btnHelp.clicked.connect(self.openDocumentation)
-
+        self.ui.btnOpenRes.clicked.connect(self.openExplorer)
         self.ui.btnClearFiles.clicked.connect(self.clearFiles)
 
     def openDocumentation(self):
@@ -61,7 +65,14 @@ class MainWindow(QMainWindow):
         else:
             self.proc = subprocess.Popen("hh.exe -mapid" + "20" + str(self.SettingsWindow.ui.tabWidget.currentIndex() + 1) + " HelpMenu.chm")
 
+    def openExplorer(self):
+        if self.explorer is not None:
+            self.explorer.kill()
+        self.explorer = subprocess.Popen('explorer "F:\data"')
+
     def chooseFile(self):  # Выбор файла
+        self.ui.LEResLine.hide()
+        self.ui.btnOpenRes.hide()
         dialog = QFileDialog.getOpenFileNames(self, "Выбор файла", "", "*.docx")
 
         if dialog[0]:
@@ -92,22 +103,14 @@ class MainWindow(QMainWindow):
                     parse_document(doc)
 
 
-            print(self.fileNames)
-            print(self.text_checklist)
-            print(self.heading1_checklist)
-            print(self.heading2_checklist)
-            print(self.heading3_checklist)
-            print(self.table_title_checklist)
-            print(self.table_heading_checklist)
-            print(self.table_checklist)
-            print(self.list_checklist)
-            print(self.page_checklist)
-            print(self.picture_checklist)
-            print(self.title_picture_checklist)
-
-            print(self.fileNames)
+            self.ui.LEResLine.setText(f"Проверено файлов: {len(self.fileNames)}")
+            self.ui.LEResLine.show()
+            self.ui.btnOpenRes.show()
+            self.clearFiles()
         else:
             self.ui.LEErrorLine.show()  # Вывод сообщения об отсутствии выбранных файлов
+            self.ui.LEResLine.hide()
+            self.ui.btnOpenRes.hide()
 
     def getSettings(self):
         self.getMainTextSettings()

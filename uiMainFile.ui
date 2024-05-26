@@ -31,9 +31,9 @@
    <widget class="QLabel" name="labelSettings">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>400</x>
       <y>10</y>
-      <width>151</width>
+      <width>141</width>
       <height>41</height>
      </rect>
     </property>
@@ -141,7 +141,7 @@ QLineEdit::placeholder {
    <widget class="QPushButton" name="btnRun">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>380</x>
       <y>300</y>
       <width>180</width>
       <height>50</height>
@@ -221,9 +221,9 @@ QPushButton:hover {
    <widget class="QLineEdit" name="LEErrorLine">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>360</x>
       <y>380</y>
-      <width>221</width>
+      <width>220</width>
       <height>50</height>
      </rect>
     </property>
@@ -335,6 +335,88 @@ QPushButton:hover {
     </property>
     <property name="text">
      <string>Отчистить</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnOpenRes">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>460</y>
+      <width>280</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+  color: solid black;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid black;
+  outline: 0px;
+}
+QPushButton:hover {
+  background-color: #6E6E6E;
+  border: 1px solid black;
+}</string>
+    </property>
+    <property name="text">
+     <string>Открыть в проводнике</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="LEResLine">
+    <property name="geometry">
+     <rect>
+      <x>345</x>
+      <y>380</y>
+      <width>250</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>14</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+  border-radius: 8px;
+  border: 1px solid yellow;
+  padding: 5px 15px;
+}
+
+QLineEdit:focus {
+  border: 1px solid yellow;
+}
+
+QLineEdit::placeholder {
+  color: #767e89;
+}</string>
+    </property>
+    <property name="text">
+     <string>Проверено N файлов</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
