@@ -63,7 +63,14 @@ class MainWindow(QMainWindow):
     def runCheckingCorrectness(self):  # Запуск проверки корректности
         if self.fileFlag:
             self.getSettings()
-            pass  # Основная часть проверки
+            print(self.text_checklist)
+            print(self.heading1_checklist)
+            print(self.heading2_checklist)
+            print(self.heading3_checklist)
+            print(self.table_checklist)
+            print(self.list_checklist)
+            print(self.page_checklist)
+            print(self.picture_checklist)
         else:
             self.ui.LEErrorLine.show()  # Вывод сообщения об отсутствии выбранных файлов
 
@@ -76,14 +83,6 @@ class MainWindow(QMainWindow):
         self.getPageSettings()
         self.getPictureSettings()
         self.getTableSettings()
-        print(self.text_checklist)
-        print(self.heading1_checklist)
-        print(self.heading2_checklist)
-        print(self.heading3_checklist)
-        print(self.table_checklist)
-        print(self.list_checklist)
-        print(self.page_checklist)
-        print(self.picture_checklist)
 
     def getMainTextSettings(self):
         alignment = WD_ALIGN_PARAGRAPH.LEFT
