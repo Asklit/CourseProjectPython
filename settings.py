@@ -38,7 +38,6 @@ class SettingsWindow(QWidget):
         self.setDefaultPage()
         self.setDefaultHeadings()
         self.setDefaultMainText()
-        self.setDefaultList()
         self.setDefaultTable()
         self.setDefaultTPicture()
 
@@ -46,7 +45,6 @@ class SettingsWindow(QWidget):
         lst = [self.setDefaultPage,
                self.setDefaultHeadings,
                self.setDefaultMainText,
-               self.setDefaultList,
                self.setDefaultTable,
                self.setDefaultTPicture]
         lst[self.tabWidget.currentIndex()]()
@@ -107,9 +105,6 @@ class SettingsWindow(QWidget):
         self.ui.CBMainTextItalic.setChecked(False)
         self.ui.CBMainTextUnderline.setChecked(False)
         self.ui.RBMainTextWidth.setChecked(True)
-
-    def setDefaultList(self):
-        pass
 
     def setDefaultTable(self):
         self.ui.LETableFontSize.setText("12")

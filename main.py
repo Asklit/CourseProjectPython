@@ -3,7 +3,8 @@ import subprocess
 import sys
 import pathlib
 
-from PyQt5 import uic
+
+from PyQt5 import uic, QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT as WD_ALIGN_PARAGRAPH
 from settings import SettingsWindow
@@ -17,6 +18,7 @@ from docxParser import set_settings, parse_document
 
 
 class MainWindow(QMainWindow):
+
     def __init__(self):
         super().__init__()
         # self.ui = Ui_Checker()
@@ -63,7 +65,7 @@ class MainWindow(QMainWindow):
             self.proc.kill()
 
         if self.isActiveWindow():
-            self.proc = subprocess.Popen("hh.exe -mapid" + "100" + " HelpMenu.chm")
+            self.proc = subprocess.Popen("hh.exe -mapid" + "100" + " Help Menu.chm")
         else:
             self.proc = subprocess.Popen("hh.exe -mapid" + "20" + str(self.SettingsWindow.ui.tabWidget.currentIndex() + 1) + " Help Menu.chm")
 
@@ -99,6 +101,9 @@ class MainWindow(QMainWindow):
             self.ui.LEResLine.show()
             count = 0
             for filename in self.fileNames:
+                self.ui.LEResLine.setText(f"Проверено файлов: {count}")
+                self.ui.show()
+                QtGui.QGuiApplication.processEvents()
                 file, extension = os.path.splitext(filename)
                 if extension == ".docx":
                     set_settings(self.text_checklist, self.heading1_checklist, self.heading2_checklist,
@@ -107,7 +112,7 @@ class MainWindow(QMainWindow):
                                  self.title_picture_checklist)
                     parse_document(filename)
                 count += 1
-                self.ui.LEResLine.setText(f"Проверено файлов: {count}")
+            self.ui.LEResLine.setText(f"Проверено файлов: {count}")
             self.ui.btnOpenRes.show()
             self.clearFiles()
         else:
@@ -120,7 +125,6 @@ class MainWindow(QMainWindow):
         self.getHeading1Settings()
         self.getHeading2Settings()
         self.getHeading3Settings()
-        self.getListSettings()
         self.getPageSettings()
         self.getPictureSettings()
         self.getTableSettings()
@@ -271,11 +275,6 @@ class MainWindow(QMainWindow):
             "NumberingPosition": numbering_position,  # Позиция нумерации (сверху, снизу, справа, слева)
             "NumberingStartFrom": self.SettingsWindow.ui.LENumerationStartFrom.text(),  # Число, с которого начинается нумерация
             "orientation": orientation
-        }
-
-    def getListSettings(self):
-        self.list_checklist = {
-            "NumberedListType": self.SettingsWindow.ui.CBNumberedListType.currentText(),  # Тип нумерации (1. 2. 3. / 1) 2) 3))
         }
 
     def getTableSettings(self):
