@@ -8,7 +8,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from settings import SettingsWindow
 import keyboard
 
-from uiMain import Ui_Checker
+# from uiMain import Ui_Checker
 
 
 class MainWindow(QMainWindow):
@@ -70,10 +70,15 @@ class MainWindow(QMainWindow):
             print(self.heading1_checklist)
             print(self.heading2_checklist)
             print(self.heading3_checklist)
+            print(self.table_title_checklist)
+            print(self.table_heading_checklist)
             print(self.table_checklist)
             print(self.list_checklist)
             print(self.page_checklist)
             print(self.picture_checklist)
+            print(self.title_picture_checklist)
+
+
 
         else:
             self.ui.LEErrorLine.show()  # Вывод сообщения об отсутствии выбранных файлов
@@ -220,10 +225,10 @@ class MainWindow(QMainWindow):
             numbering_position = "Right"
 
         self.page_checklist = {
-            "FieldsTop": self.SettingsWindow.ui.LEFieldsTop.text(),  # Поля страницы (верхнее)
-            "FieldsBottom": self.SettingsWindow.ui.LEFieldsBottom.text(),  # Поля страницы (нижнее)
-            "FieldsLeft": self.SettingsWindow.ui.LEFieldsLeft.text(),  # Поля страницы (левое)
-            "FieldsRight": self.SettingsWindow.ui.LEFieldsRight.text(),  # Поля страницы (правое)
+            "top_margin": self.SettingsWindow.ui.LEFieldsTop.text(),  # Поля страницы (верхнее)
+            "bottom_margin": self.SettingsWindow.ui.LEFieldsBottom.text(),  # Поля страницы (нижнее)
+            "left_margin": self.SettingsWindow.ui.LEFieldsLeft.text(),  # Поля страницы (левое)
+            "right_margin": self.SettingsWindow.ui.LEFieldsRight.text(),  # Поля страницы (правое)
             "NumberingPosition": numbering_position,  # Позиция нумерации (сверху, снизу, справа, слева)
             "NumberingStartFrom": self.SettingsWindow.ui.LENumerationStartFrom.text()  # Число, с которого начинается нумерация
         }
@@ -258,16 +263,16 @@ class MainWindow(QMainWindow):
         }
 
         self.table_title_checklist = {
-            "title_format": self.SettingsWindow.ui.CBTableFormatParagraph.currentText(), # Формат подписи под таблицей (Таблица <N> - <Название>)
+            "format_regex": self.SettingsWindow.ui.CBTableFormatParagraph.currentText(), # Формат подписи под таблицей (Таблица <N> - <Название>)
         }
 
         self.table_heading_checklist = {
-            "heading_font_bald": self.SettingsWindow.ui.CBTableBold.isChecked(),  # Жирный шрифт заголовков
-            "heading_font_italic": self.SettingsWindow.ui.CBTableItalic.isChecked(),  # Курсив заголовков
-            "heading_font_underline": self.SettingsWindow.ui.CBTableUnderline.isChecked(),  # Подчеркивание заголовков
+            "font_bald": self.SettingsWindow.ui.CBTableBold.isChecked(),  # Жирный шрифт заголовков
+            "font_italic": self.SettingsWindow.ui.CBTableItalic.isChecked(),  # Курсив заголовков
+            "font_underline": self.SettingsWindow.ui.CBTableUnderline.isChecked(),  # Подчеркивание заголовков
             "heading_left": self.SettingsWindow.ui.CBTableHeadingLeft.isChecked(),  # Необходимость заголовков слева
             "heading_top": self.SettingsWindow.ui.CBTableHeadingTop.isChecked(),  # Необходимость заголовков сверху
-            "heading_alignment": alignment
+            "alignment": alignment
             }
 
     def getPictureSettings(self):
@@ -288,26 +293,26 @@ class MainWindow(QMainWindow):
             picture_alignment = WD_ALIGN_PARAGRAPH.CENTER
 
         self.picture_checklist = {
-            "picture_alignment": picture_alignment,  # Выравнивание картинки
+            "alignment": picture_alignment,  # Выравнивание картинки
             "keep_with_next": self.SettingsWindow.ui.CBPictureNotSpacing.isChecked(),  # Не отрывать рисунок от подписи
-            "picture_space_before": self.SettingsWindow.ui.LEPictureSpacingBefore.text(),
-            "picture_space_after": self.SettingsWindow.ui.LEPictureSpacingAfter.text(),
-            "picture_first_line_indent": self.SettingsWindow.ui.LEPicturetSpacingParagraph.text(),
-            "picture_line_spacing": self.SettingsWindow.ui.LEPictureSpacingBetween.text(),
+            "space_before": self.SettingsWindow.ui.LEPictureSpacingBefore.text(),
+            "space_after": self.SettingsWindow.ui.LEPictureSpacingAfter.text(),
+            "first_line_indent": self.SettingsWindow.ui.LEPicturetSpacingParagraph.text(),
+            "line_spacing": self.SettingsWindow.ui.LEPictureSpacingBetween.text(),
         }
 
         self.title_picture_checklist = {
-            "title_font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт подписи под рисунком
-            "title_font_size": self.SettingsWindow.ui.LEPictureFontSize.text(),  # Размер подписи под рисунком
-            "title_font_bald": self.SettingsWindow.ui.CBPictureTitleBold.isChecked(),  # Выделение жирным шрифтом
-            "title_font_italic": self.SettingsWindow.ui.CBPictureTitleItalic.isChecked(),  # Выделение курсовом
-            "title_font_underline": self.SettingsWindow.ui.CBPictureTitleUnderline.isChecked(),  # Выделение подчеркиванием
-            "title_space_before": self.SettingsWindow.ui.LEPictureTitleSpacingBefore.text(),  # интервал перед подписью
-            "title_space_after": self.SettingsWindow.ui.LEPictureTitleSpacingAfter.text(),  # интервал после подписи
-            "title_first_line_indent": self.SettingsWindow.ui.LEPictureTitleSpacingFirstLine.text(),  # Абзацный отступ
-            "title_line_spacing": self.SettingsWindow.ui.LEPictureTitleSpacingBetween.text(),  # Междустрочный интервал
-            "title_alignment": title_alignment,  # Выравнивание подписи
-            "title_format": self.SettingsWindow.ui.CBPictureTitleFormat.currentText()  # Формат подписи (Рисунок <N> - <Название>.)
+            "font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт подписи под рисунком
+            "font_size": self.SettingsWindow.ui.LEPictureFontSize.text(),  # Размер подписи под рисунком
+            "font_bald": self.SettingsWindow.ui.CBPictureTitleBold.isChecked(),  # Выделение жирным шрифтом
+            "font_italic": self.SettingsWindow.ui.CBPictureTitleItalic.isChecked(),  # Выделение курсовом
+            "font_underline": self.SettingsWindow.ui.CBPictureTitleUnderline.isChecked(),  # Выделение подчеркиванием
+            "space_before": self.SettingsWindow.ui.LEPictureTitleSpacingBefore.text(),  # интервал перед подписью
+            "space_after": self.SettingsWindow.ui.LEPictureTitleSpacingAfter.text(),  # интервал после подписи
+            "first_line_indent": self.SettingsWindow.ui.LEPictureTitleSpacingFirstLine.text(),  # Абзацный отступ
+            "line_spacing": self.SettingsWindow.ui.LEPictureTitleSpacingBetween.text(),  # Междустрочный интервал
+            "alignment": title_alignment,  # Выравнивание подписи
+            "format_regex": self.SettingsWindow.ui.CBPictureTitleFormat.currentText()  # Формат подписи (Рисунок <N> - <Название>.)
         }
 
     def setupSettings(self):  # Запуск окна настроек
