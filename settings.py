@@ -3,7 +3,7 @@ import sys
 from PyQt5 import (uic, QtCore, QtWidgets)
 from PyQt5.QtWidgets import QWidget, QApplication
 
-from uiSettings import Ui_Settings
+# from uiSettings import Ui_Settings
 
 
 # from SettingsUi import Ui_Settings

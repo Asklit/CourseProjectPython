@@ -8,7 +8,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from settings import SettingsWindow
 import keyboard
 
-from uiMain import Ui_Checker
+# from uiMain import Ui_Checker
 
 
 class MainWindow(QMainWindow):
