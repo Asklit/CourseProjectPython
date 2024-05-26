@@ -30,6 +30,9 @@ class MainWindow(QMainWindow):
         self.list_checklist = None
         self.table_checklist = None
         self.picture_checklist = None
+        self.table_heading_checklist = None
+        self.title_picture_checklist = None
+        self.table_title_checklist = None
 
         self.proc = None
 
@@ -243,14 +246,7 @@ class MainWindow(QMainWindow):
         self.table_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт
             "font_size": self.SettingsWindow.ui.LETableFontSize.text(),  # Размер шрифта в таблице
-            "heading_font_bald": self.SettingsWindow.ui.CBTableBold.isChecked(),  # Жирный шрифт заголовков
-            "heading_font_italic": self.SettingsWindow.ui.CBTableItalic.isChecked(),  # Курсив заголовков
-            "heading_font_underline": self.SettingsWindow.ui.CBTableUnderline.isChecked(),  # Подчеркивание заголовков
-            "heading_left": self.SettingsWindow.ui.CBTableHeadingLeft.isChecked(),  # Необходимость заголовков слева
-            "heading_top": self.SettingsWindow.ui.CBTableHeadingTop.isChecked(),  # Необходимость заголовков сверху
-            "heading_alignment": alignment,
             "paragraph_before_table": self.SettingsWindow.ui.CBTableParagraphBeforeTable.isChecked(),  # Параграф перед таблицей
-            "title_format": self.SettingsWindow.ui.CBTableFormatParagraph.currentText(),  # Формат подписи под таблицей (Таблица <N> - <Название>)
             "space_before": self.SettingsWindow.ui.LETableSpacingBefore.text(),
             "space_after": self.SettingsWindow.ui.LETableSpacingAfter.text(),
             "left_indent": 0,  # нет такого в UI
@@ -259,6 +255,19 @@ class MainWindow(QMainWindow):
             "line_spacing": self.SettingsWindow.ui.LETabletSpacingBetween.text(),
             "spacing_under_paragraph_after_table": self.SettingsWindow.ui.LETableParagraphSpacingAfter.text()  # Интервал абзаца после таблицы
         }
+
+        self.table_title_checklist = {
+            "title_format": self.SettingsWindow.ui.CBTableFormatParagraph.currentText(), # Формат подписи под таблицей (Таблица <N> - <Название>)
+        }
+
+        self.table_heading_checklist = {
+            "heading_font_bald": self.SettingsWindow.ui.CBTableBold.isChecked(),  # Жирный шрифт заголовков
+            "heading_font_italic": self.SettingsWindow.ui.CBTableItalic.isChecked(),  # Курсив заголовков
+            "heading_font_underline": self.SettingsWindow.ui.CBTableUnderline.isChecked(),  # Подчеркивание заголовков
+            "heading_left": self.SettingsWindow.ui.CBTableHeadingLeft.isChecked(),  # Необходимость заголовков слева
+            "heading_top": self.SettingsWindow.ui.CBTableHeadingTop.isChecked(),  # Необходимость заголовков сверху
+            "heading_alignment": alignment
+            }
 
     def getPictureSettings(self):
         title_alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -278,6 +287,15 @@ class MainWindow(QMainWindow):
             picture_alignment = WD_ALIGN_PARAGRAPH.CENTER
 
         self.picture_checklist = {
+            "picture_alignment": picture_alignment,  # Выравнивание картинки
+            "keep_with_next": self.SettingsWindow.ui.CBPictureNotSpacing.isChecked(),  # Не отрывать рисунок от подписи
+            "picture_space_before": self.SettingsWindow.ui.LEPictureSpacingBefore.text(),
+            "picture_space_after": self.SettingsWindow.ui.LEPictureSpacingAfter.text(),
+            "picture_first_line_indent": self.SettingsWindow.ui.LEPicturetSpacingParagraph.text(),
+            "picture_line_spacing": self.SettingsWindow.ui.LEPictureSpacingBetween.text(),
+        }
+
+        self.title_picture_checklist = {
             "title_font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт подписи под рисунком
             "title_font_size": self.SettingsWindow.ui.LEPictureFontSize.text(),  # Размер подписи под рисунком
             "title_font_bald": self.SettingsWindow.ui.CBPictureTitleBold.isChecked(),  # Выделение жирным шрифтом
@@ -288,13 +306,7 @@ class MainWindow(QMainWindow):
             "title_first_line_indent": self.SettingsWindow.ui.LEPictureTitleSpacingFirstLine.text(),  # Абзацный отступ
             "title_line_spacing": self.SettingsWindow.ui.LEPictureTitleSpacingBetween.text(),  # Междустрочный интервал
             "title_alignment": title_alignment,  # Выравнивание подписи
-            "title_format": self.SettingsWindow.ui.CBPictureTitleFormat.currentText(),  # Формат подписи (Рисунок <N> - <Название>.)
-            "picture_alignment": picture_alignment,  # Выравнивание картинки
-            "keep_with_next": self.SettingsWindow.ui.CBPictureNotSpacing.isChecked(),  # Не отрывать рисунок от подписи
-            "picture_space_before": self.SettingsWindow.ui.LEPictureSpacingBefore.text(),
-            "picture_space_after": self.SettingsWindow.ui.LEPictureSpacingAfter.text(),
-            "picture_first_line_indent": self.SettingsWindow.ui.LEPicturetSpacingParagraph.text(),
-            "picture_line_spacing": self.SettingsWindow.ui.LEPictureSpacingBetween.text(),
+            "title_format": self.SettingsWindow.ui.CBPictureTitleFormat.currentText()  # Формат подписи (Рисунок <N> - <Название>.)
         }
 
     def setupSettings(self):  # Запуск окна настроек
