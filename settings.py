@@ -93,7 +93,7 @@ class SettingsWindow(QWidget):
         self.ui.LEMainTextSpacingAfter.setText("0")
         self.ui.LEMainTextSize.setText("13")
         self.ui.LEMainTextSpacingBetween.setText("1.5")
-        self.ui.LEMainTextSpacingParagraph.setText("1,25")
+        self.ui.LEMainTextSpacingParagraph.setText("1.25")
 
         self.ui.CBMainTextBold.setChecked(False)
         self.ui.CBMainTextItalic.setChecked(False)

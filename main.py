@@ -11,7 +11,6 @@ from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT as WD_ALIGN_VERTICAL
 from docx.enum.section import WD_ORIENTATION
 from docx import Document
 
-from docxParser import parse_document
 # from uiMain import Ui_Checker
 
 
