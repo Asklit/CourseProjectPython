@@ -74,6 +74,7 @@ class MainWindow(QMainWindow):
             print(self.list_checklist)
             print(self.page_checklist)
             print(self.picture_checklist)
+
         else:
             self.ui.LEErrorLine.show()  # Вывод сообщения об отсутствии выбранных файлов
 
