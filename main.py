@@ -2,9 +2,12 @@ import os
 import subprocess
 import sys
 import pathlib
+from multiprocessing import Pool
 
+import time
 
 from PyQt5 import uic, QtCore, QtGui
+from PyQt5.QtCore import QRunnable, Qt, QThreadPool, QThread, QObject, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT as WD_ALIGN_PARAGRAPH
 from settings import SettingsWindow
@@ -15,6 +18,32 @@ from docx import Document
 
 from docxParser import set_settings, parse_document
 # from uiMain import Ui_Checker
+
+
+def parse_docx(filename):
+
+    file, extension = os.path.splitext(filename)
+    if extension == ".docx":
+        parse_document(filename)
+
+
+# Step 1: Create a worker class
+class Worker(QThread):
+    doc_progressed = pyqtSignal()
+
+    def __init__(self, filenames):
+        super().__init__()
+        self.filenames = filenames
+
+    def doc_finished(self, res):
+        self.doc_progressed.emit()
+
+    def run(self):
+        pool = Pool()
+        for filename in self.filenames:
+            pool.apply_async(parse_docx, args=(filename,), callback=self.doc_finished)
+        pool.close()
+        pool.join()
 
 
 class MainWindow(QMainWindow):
@@ -60,6 +89,10 @@ class MainWindow(QMainWindow):
         self.ui.btnOpenRes.clicked.connect(self.openExplorer)
         self.ui.btnClearFiles.clicked.connect(self.clearFiles)
 
+        self.doc_checked_count = 0
+
+        self.thread = None
+
     def openDocumentation(self):
         if self.proc is not None:
             self.proc.kill()
@@ -94,27 +127,34 @@ class MainWindow(QMainWindow):
         self.fileFlag = False
         self.fileNames = []
 
+    def update_progress_bar(self):
+        self.doc_checked_count += 1
+        self.ui.LEResLine.setText(f"Проверено файлов: {self.doc_checked_count}")
+
+    def on_checking_finished(self):
+        self.doc_checked_count = 0
+        self.ui.btnOpenRes.show()
+        self.clearFiles()
+        self.thread.quit()
+
     def runCheckingCorrectness(self):  # Запуск проверки корректности
         if self.fileFlag:
+            self.doc_checked_count = 0
             self.getSettings()
-            self.ui.LEResLine.setText(f"Проверено файлов: 0")
-            self.ui.LEResLine.show()
-            count = 0
-            for filename in self.fileNames:
-                self.ui.LEResLine.setText(f"Проверено файлов: {count}")
-                self.ui.show()
-                QtGui.QGuiApplication.processEvents()
-                file, extension = os.path.splitext(filename)
-                if extension == ".docx":
-                    set_settings(self.text_checklist, self.heading1_checklist, self.heading2_checklist,
+            set_settings(self.text_checklist, self.heading1_checklist, self.heading2_checklist,
                                  self.heading3_checklist, self.table_title_checklist, self.table_heading_checklist,
                                  self.table_checklist, self.list_checklist, self.page_checklist, self.picture_checklist,
                                  self.title_picture_checklist)
-                    parse_document(filename)
-                count += 1
-            self.ui.LEResLine.setText(f"Проверено файлов: {count}")
-            self.ui.btnOpenRes.show()
-            self.clearFiles()
+
+            self.ui.LEResLine.setText(f"Проверено файлов: 0")
+            self.ui.LEResLine.show()
+
+            self.thread = Worker(self.fileNames)
+            self.thread.doc_progressed.connect(self.update_progress_bar)
+            # self.thread.started.connect(self.thread.run)
+
+            self.thread.start()
+            self.thread.finished.connect(self.on_checking_finished)
         else:
             self.ui.LEErrorLine.show()  # Вывод сообщения об отсутствии выбранных файлов
             self.ui.LEResLine.hide()
@@ -386,4 +426,5 @@ if __name__ == '__main__':  # Запуск программы
     ex = MainWindow()
     ex.show()
     sys.excepthook = except_hook
+
     sys.exit(app.exec())

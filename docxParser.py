@@ -179,7 +179,7 @@ image_checklist = {
     "line_spacing": 1,
 }
 image_name_checklist = {
-    "format_regex": "Рисунок {N} - <Название>.",
+    "format_regex": "Рисунок <N> - <Название>.",
     "font_name": "Times New Roman",
     "font_size": 11.0,
     "font_bald": True,
