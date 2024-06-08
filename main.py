@@ -3,45 +3,46 @@ import subprocess
 import sys
 import pathlib
 from multiprocessing import Pool
-
+from multiprocessing.managers import SyncManager, BaseManager
 import time
+import dill
+
 
 from PyQt5 import uic, QtCore, QtGui
 from PyQt5.QtCore import QRunnable, Qt, QThreadPool, QThread, QObject, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
-from docx.enum.text import WD_PARAGRAPH_ALIGNMENT as WD_ALIGN_PARAGRAPH
 from settings import SettingsWindow
 import keyboard
-from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT as WD_ALIGN_VERTICAL
 from docx.enum.section import WD_ORIENTATION
 from docx import Document
 
-from docxParser import set_settings, parse_document
+from docxParser import DocumentParser
 # from uiMain import Ui_Checker
 
 
-def parse_docx(filename):
-
+def parse_docx(filename, p):
     file, extension = os.path.splitext(filename)
     if extension == ".docx":
-        parse_document(filename)
+        p.parse_document(filename)
 
 
 # Step 1: Create a worker class
 class Worker(QThread):
     doc_progressed = pyqtSignal()
 
-    def __init__(self, filenames):
+    def __init__(self, filenames, parser):
         super().__init__()
         self.filenames = filenames
+        self.parser = parser
 
     def doc_finished(self, res):
         self.doc_progressed.emit()
 
     def run(self):
         pool = Pool()
+        parser = self.parser
         for filename in self.filenames:
-            pool.apply_async(parse_docx, args=(filename,), callback=self.doc_finished)
+            pool.apply_async(parse_docx, args=(filename, parser), callback=self.doc_finished)
         pool.close()
         pool.join()
 
@@ -57,7 +58,7 @@ class MainWindow(QMainWindow):
         self.fileNames = []  # Список путей до выбранных файлов
         self.ui = uic.loadUi('uiMainFile.ui', self)  # Открытие файла ui
 
-        # Параметры форматирования докумерта
+        # Параметры форматирования документа
         self.text_checklist = None
         self.heading1_checklist = None
         self.heading2_checklist = None
@@ -69,6 +70,9 @@ class MainWindow(QMainWindow):
         self.table_heading_checklist = None
         self.title_picture_checklist = None
         self.table_title_checklist = None
+        self.enable_optional_settings = None
+
+
 
         self.proc = None
         self.explorer = None
@@ -141,15 +145,18 @@ class MainWindow(QMainWindow):
         if self.fileFlag:
             self.doc_checked_count = 0
             self.getSettings()
-            set_settings(self.text_checklist, self.heading1_checklist, self.heading2_checklist,
-                                 self.heading3_checklist, self.table_title_checklist, self.table_heading_checklist,
-                                 self.table_checklist, self.list_checklist, self.page_checklist, self.picture_checklist,
-                                 self.title_picture_checklist)
+            self.getOptionalSettings()
+            parser = DocumentParser()
+            parser.set_settings(self.text_checklist, self.heading1_checklist, self.heading2_checklist,
+                                self.heading3_checklist, self.table_title_checklist, self.table_heading_checklist,
+                                self.table_checklist, self.list_checklist, self.page_checklist, self.picture_checklist,
+                                self.title_picture_checklist)
+            parser.set_enable_optional_settings(self.enable_optional_settings)
 
             self.ui.LEResLine.setText(f"Проверено файлов: 0")
             self.ui.LEResLine.show()
 
-            self.thread = Worker(self.fileNames)
+            self.thread = Worker(self.fileNames, parser)
             self.thread.doc_progressed.connect(self.update_progress_bar)
             # self.thread.started.connect(self.thread.run)
 
@@ -159,6 +166,15 @@ class MainWindow(QMainWindow):
             self.ui.LEErrorLine.show()  # Вывод сообщения об отсутствии выбранных файлов
             self.ui.LEResLine.hide()
             self.ui.btnOpenRes.hide()
+
+    def getOptionalSettings(self):
+        self.enable_optional_settings = {
+            "table_headings_top": self.SettingsWindow.ui.CBTableHeadingTop.isChecked(),  # Необходимость заголовков сверху
+            "table_headings_left": self.SettingsWindow.ui.CBTableHeadingLeft.isChecked(),  # Необходимость заголовков слева
+            "table_title": self.SettingsWindow.ui.CBTableParagraphBeforeTable.isChecked(),  # Параграф перед таблицей
+            "paragraph_after_table": True,
+            "enable_pic_title": self.SettingsWindow.ui.CBPictureTitle.isChecked(),
+        }
 
     def getSettings(self):
         self.getMainTextSettings()
@@ -170,15 +186,15 @@ class MainWindow(QMainWindow):
         self.getTableSettings()
 
     def getMainTextSettings(self):
-        alignment = WD_ALIGN_PARAGRAPH.LEFT
+        alignment = 0
         if self.SettingsWindow.ui.RBMainTextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.LEFT
+            alignment = 0
         elif self.SettingsWindow.ui.RBMainTextRight.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            alignment = 2
         elif self.SettingsWindow.ui.RBMainTextMiddle.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.CENTER
+            alignment = 1
         elif self.SettingsWindow.ui.RBMainTextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+            alignment = 3
 
         self.text_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),
@@ -200,15 +216,15 @@ class MainWindow(QMainWindow):
         }
 
     def getHeading1Settings(self):
-        alignment = WD_ALIGN_PARAGRAPH.CENTER
+        alignment = 1
         if self.SettingsWindow.ui.RBLVL1TextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.LEFT
+            alignment = 0
         elif self.SettingsWindow.ui.RBLVL1TextRight.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            alignment = 2
         elif self.SettingsWindow.ui.RBLVL1TextMiddle.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.CENTER
+            alignment = 1
         elif self.SettingsWindow.ui.RBLVL1TextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+            alignment = 3
 
         self.heading1_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),
@@ -231,15 +247,15 @@ class MainWindow(QMainWindow):
         }
 
     def getHeading2Settings(self):
-        alignment = WD_ALIGN_PARAGRAPH.CENTER
+        alignment = 1
         if self.SettingsWindow.ui.RBLVL2TextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.LEFT
+            alignment = 0
         elif self.SettingsWindow.ui.RBLVL2TextRight.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            alignment = 2
         elif self.SettingsWindow.ui.RBLVL2TextMiddle.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.CENTER
+            alignment = 1
         elif self.SettingsWindow.ui.RBLVL2TextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+            alignment = 3
 
         self.heading2_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),
@@ -262,15 +278,15 @@ class MainWindow(QMainWindow):
         }
 
     def getHeading3Settings(self):
-        alignment = WD_ALIGN_PARAGRAPH.CENTER
+        alignment = 1
         if self.SettingsWindow.ui.RBLVL3TextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.LEFT
+            alignment = 0
         elif self.SettingsWindow.ui.RBLVL3TextRight.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            alignment = 2
         elif self.SettingsWindow.ui.RBLVL3TextMiddle.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.CENTER
+            alignment = 1
         elif self.SettingsWindow.ui.RBLVL3TextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+            alignment = 3
 
         self.heading3_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),
@@ -303,9 +319,9 @@ class MainWindow(QMainWindow):
         elif self.SettingsWindow.ui.btnNumerationRight.isChecked():
             numbering_position = "Right"
 
-        orientation = WD_ORIENTATION.PORTRAIT
+        orientation = 0
         if self.SettingsWindow.ui.LandscapeOrientation.isChecked():
-            orientation = WD_ORIENTATION.LANDSCAPE
+            orientation = 1
 
         self.page_checklist = {
             "top_margin": float(self.SettingsWindow.ui.LEFieldsTop.text()),  # Поля страницы (верхнее)
@@ -318,29 +334,29 @@ class MainWindow(QMainWindow):
         }
 
     def getTableSettings(self):
-        alignment = WD_ALIGN_PARAGRAPH.LEFT
+        alignment = 0
         if self.SettingsWindow.ui.RBTableTextLeft.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.LEFT
+            alignment = 0
         elif self.SettingsWindow.ui.RBTableTextRight.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            alignment = 2
         elif self.SettingsWindow.ui.RBLVL3TextMiddle.isChecked():
-            alignment = WD_ALIGN_PARAGRAPH.CENTER
+            alignment = 1
 
-        vertical_alignment = WD_ALIGN_PARAGRAPH.CENTER
+        vertical_alignment = 1
         if self.SettingsWindow.ui.RBTableTextTop.isChecked():
-            vertical_alignment = WD_ALIGN_VERTICAL.TOP
+            vertical_alignment = 0
         elif self.SettingsWindow.ui.RBTableTextMiddle_2.isChecked():
-            vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+            vertical_alignment = 1
         elif self.SettingsWindow.ui.RBTableTextBottom.isChecked():
-            vertical_alignment = WD_ALIGN_VERTICAL.BOTTOM
+            vertical_alignment = 2
 
-        heading_alignment = WD_ALIGN_PARAGRAPH.CENTER
+        heading_alignment = 1
         if self.SettingsWindow.ui.RBTableHeadingTextLeft.isChecked():
-            heading_alignment = WD_ALIGN_PARAGRAPH.LEFT
+            heading_alignment = 0
         elif self.SettingsWindow.ui.RBTableHeadingTextRight.isChecked():
-            heading_alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            heading_alignment = 2
         elif self.SettingsWindow.ui.RBTableHeadingTextMiddle.isChecked():
-            heading_alignment = WD_ALIGN_PARAGRAPH.CENTER
+            heading_alignment = 1
 
         self.table_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт
@@ -372,21 +388,21 @@ class MainWindow(QMainWindow):
             }
 
     def getPictureSettings(self):
-        title_alignment = WD_ALIGN_PARAGRAPH.LEFT
+        title_alignment = 0
         if self.SettingsWindow.ui.RBPictureTitleLeft.isChecked():
-            title_alignment = WD_ALIGN_PARAGRAPH.LEFT
+            title_alignment = 0
         elif self.SettingsWindow.ui.RBPictureTitleRight.isChecked():
-            title_alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            title_alignment = 2
         elif self.SettingsWindow.ui.RBPictureTitleMiddle.isChecked():
-            title_alignment = WD_ALIGN_PARAGRAPH.CENTER
+            title_alignment = 1
 
-        picture_alignment = WD_ALIGN_PARAGRAPH.CENTER
+        picture_alignment = 1
         if self.SettingsWindow.ui.RBPictureLeft.isChecked():
-            picture_alignment = WD_ALIGN_PARAGRAPH.LEFT
+            picture_alignment = 0
         elif self.SettingsWindow.ui.RBPictureRight.isChecked():
-            picture_alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            picture_alignment = 2
         elif self.SettingsWindow.ui.RBPictureMiddle.isChecked():
-            picture_alignment = WD_ALIGN_PARAGRAPH.CENTER
+            picture_alignment = 1
 
         self.picture_checklist = {
             "alignment": picture_alignment,  # Выравнивание картинки
