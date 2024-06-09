@@ -52,6 +52,26 @@ class ParagraphChecklist(BaseChecklist):
         self.line_spacing = None
 
 
+class ListChecklist(ParagraphChecklist):
+    def __init__(self):
+        super().__init__()
+        self.left_indent_base = None
+        self.left_indent_mod = None
+        self.list_reminder = (
+            "Списку предшествует абзац текста с флагом \"не отрывать от следующего\"\n",
+            "Нумерованный список:\n",
+            "   Элемент списка начинается с заглавной буквы\n",
+            "   Элемент списка заканчивается точкой\n",
+            "   В качестве номера используется арабская цифра\n",
+            "Маркированный список:\n",
+            "   Элемент списка начинается с заглавной буквы\n",
+            "   Элемент списка заканчивается точкой с запятой\n",
+            "   В качестве маркера используется тире\n",
+            "Выступ первой строки 0.75 см\n",
+            "Отступ вычисляется по формуле: 1.25+0.75*(Уровень_элемента - 1)\n",
+        )
+
+
 class TableParagraphChecklist(ParagraphChecklist):
     def __init__(self):
         super().__init__()
@@ -77,8 +97,6 @@ class MarginsChecklist(BaseChecklist):
         self.left_margin = None
         self.right_margin = None
         self.orientation = None
-
-
 
 
 regex_transform = {
@@ -135,7 +153,6 @@ orientation_to_comment = {
     WD_ORIENTATION.LANDSCAPE: "Альбомная"
 }
 
-
 modifications = {
     "paragraph_after_table": {
         "space_before": 13.0
@@ -149,7 +166,7 @@ class DocumentParser:
         self.heading1_checklist = ParagraphChecklist()
         self.heading2_checklist = ParagraphChecklist()
         self.heading3_checklist = ParagraphChecklist()
-        self.list_checklist = ParagraphChecklist()
+        self.list_checklist = ListChecklist()
         self.table_headings_checklist = TableParagraphChecklist()
         self.table_text_checklist = TableParagraphChecklist()
         self.table_name_checklist = ParagraphChecklist()
@@ -157,13 +174,18 @@ class DocumentParser:
         self.image_checklist = ImageChecklist()
         self.image_name_checklist = ParagraphChecklist()
         self.margins_checklist = MarginsChecklist()
+        self.set_settings(default_text_checklist, default_heading1_checklist, default_heading2_checklist,
+                          default_heading3_checklist, default_table_name_checklist, default_table_headings_checklist,
+                          default_table_text_checklist, default_list_checklist, default_margins_checklist,
+                          default_image_checklist, default_image_name_checklist)
 
         self.enable_optional_settings = {
             "table_headings_top": True,
             "table_headings_left": False,
             "table_title": True,
             "paragraph_after_table": True,
-            "enable_pic_title": True
+            "enable_pic_title": True,
+            "list_reminder": True,
         }
 
     def set_enable_optional_settings(self, elements: dict):
@@ -179,6 +201,8 @@ class DocumentParser:
             self.text_checklist.set_settings(text_check)
             self.text_after_table_checklist.set_settings(text_check)
             self.text_after_table_checklist.space_before = 13.0  # !!!!
+            self.list_checklist.set_settings(text_check)
+            self.list_checklist.set_settings(default_list_checklist)  # !!!!
         if isinstance(h1_check, dict):
             self.heading1_checklist.set_settings(h1_check)
         if isinstance(h2_check, dict):
@@ -192,7 +216,9 @@ class DocumentParser:
         if isinstance(table_text_check, dict):
             self.table_text_checklist.set_settings(table_text_check)
         if isinstance(list_check, dict):
+
             self.list_checklist.set_settings(list_check)
+
         if isinstance(page_check, dict):
             self.margins_checklist.set_settings(page_check)
         if isinstance(pic_check, dict):
@@ -207,9 +233,9 @@ class DocumentParser:
     @staticmethod
     def get_error_comment(checklist, received: dict):
         attributes = inspect.getmembers(checklist, lambda a: not (inspect.isroutine(a)))
-        expected = [a for a in attributes if not (a[0].startswith('__') and a[0].endswith('__'))]
+        expected = {a[0]: a[1] for a in attributes if not (a[0].startswith('__') and a[0].endswith('__'))}
         comments = set()
-        for key, val in expected:
+        for key, val in expected.items():
             comparison_res = True
             comment = ""
             if key in received.keys() and val is not None:
@@ -219,6 +245,14 @@ class DocumentParser:
                     if not comparison_res:
                         comment += f"{param_to_comment[key]}: "
                         comment += f"{val}; "
+                        comment += f"Получено: {received[key]}.\n"
+                        comments.add(comment)
+                        continue
+                elif "list_level" in received.keys() and key == "left_indent":
+                    expected_indent = expected["left_indent_base"] + expected["left_indent_mod"] * received["list_level"]
+                    if received["left_indent"] != expected_indent:
+                        comment += f"{param_to_comment[key]}: "
+                        comment += f"Ожидалось: {expected_indent}; "
                         comment += f"Получено: {received[key]}.\n"
                         comments.add(comment)
                         continue
@@ -248,8 +282,7 @@ class DocumentParser:
                     comments.add(comment)
         return comments
 
-    @staticmethod
-    def get_run_properties(document, p, run):
+    def get_run_properties(self, document, p, run):
         """ Параметры параграфа """
         st = p.style
         formatting = p.paragraph_format  # Формат параграфа
@@ -327,6 +360,8 @@ class DocumentParser:
             st_formatting.line_spacing if st_formatting.line_spacing is not None else \
                 def_formatting.line_spacing if def_formatting.line_spacing is not None else 1.0
 
+        is_list = self.is_list(p)
+
         paragraph_stats = {
             "font_name": font_name,
             "font_size": font_size,
@@ -344,6 +379,7 @@ class DocumentParser:
             "right_indent": right_indent,
             "first_line_indent": first_line_indent,
             "line_spacing": line_spacing,
+            "is_list": is_list,
         }
         return paragraph_stats
 
@@ -402,6 +438,8 @@ class DocumentParser:
         image_name_check = 0
         text_after_table_check = 0
         first_paragraph_not_reached = True
+        table_name_not_found = False
+        list_start = False
         paragraphs = document.paragraphs
         for block in self.iter_block_items(document):
             next_paragraph_to_comment = ""
@@ -411,6 +449,14 @@ class DocumentParser:
             stats_to_compare = {}
             run_comments = set()
             if 'text' in str(block):
+                if self.is_list(block):
+                    if not list_start:
+                        list_start = True
+                        block.add_comment(''.join(self.list_checklist.list_reminder),
+                                          author="Напоминание о формате списков")
+                else:
+                    list_start = False
+
                 if first_paragraph_not_reached:
                     first_paragraph_not_reached = False
                     margin_comments = self.parse_margins(document)
@@ -428,8 +474,7 @@ class DocumentParser:
                             run_comments = self.get_error_comment(stats_to_compare, paragraph_stats)
                             for comment in run_comments:
                                 next_comment_to_send.add(comment)
-                            if not lock_comment_name:
-                                next_comment_type = self.set_comment_name("Рисунок", next_comment_type, lock_comment_name)
+                            next_comment_type = self.set_comment_name("Рисунок", next_comment_type, lock_comment_name)
                             lock_comment_name = True
                             next_paragraph_to_comment = block
                             # print("Image:", block)
@@ -441,30 +486,36 @@ class DocumentParser:
                                 paragraph_stats["is_list"] = self.is_list(block)
                                 stats_to_compare = self.heading1_checklist
                                 next_comment_type = self.set_comment_name("Заголовок 1", next_comment_type,
-                                                                     lock_comment_name)
+                                                                          lock_comment_name)
                             elif block.style.name.startswith("Heading 2"):
                                 paragraph_stats["is_list"] = self.is_list(block)
                                 stats_to_compare = self.heading2_checklist
                                 next_comment_type = self.set_comment_name("Заголовок 2", next_comment_type,
-                                                                     lock_comment_name)
+                                                                          lock_comment_name)
                             elif block.style.name.startswith("Heading 3"):
                                 paragraph_stats["is_list"] = self.is_list(block)
                                 stats_to_compare = self.heading3_checklist
                                 next_comment_type = self.set_comment_name("Заголовок 3", next_comment_type,
-                                                                     lock_comment_name)
+                                                                          lock_comment_name)
                             elif self.is_list(block):
                                 stats_to_compare = self.list_checklist
-                                next_comment_type = self.set_comment_name("Список", next_comment_type, lock_comment_name)
+                                if block.list_info[0]:
+                                    paragraph_stats["list_level"] = block.list_info[2]
+                                else:
+                                    paragraph_stats["list_level"] = 0
+                                next_comment_type = self.set_comment_name("Элемент списка", next_comment_type,
+                                                                          lock_comment_name)
+
                             elif self.enable_optional_settings["enable_pic_title"] and image_name_check:
                                 stats_to_compare = self.image_name_checklist
                                 paragraph_stats["format_regex"] = block.text
                                 next_comment_type = self.set_comment_name("Название рисунка", next_comment_type,
-                                                                     lock_comment_name)
+                                                                          lock_comment_name)
                                 lock_comment_name = True
                             elif self.enable_optional_settings["paragraph_after_table"] and text_after_table_check:
                                 stats_to_compare = self.text_after_table_checklist
                                 next_comment_type = self.set_comment_name("Параграф после таблицы", next_comment_type,
-                                                                     lock_comment_name)
+                                                                          lock_comment_name)
                                 lock_comment_name = True
                             else:
                                 stats_to_compare = self.text_checklist
@@ -476,16 +527,19 @@ class DocumentParser:
             elif 'table' in str(block):  # Table
                 text_after_table_check = 2
                 """Перепроверка названия таблица"""
-                if self.enable_optional_settings["table_title"] and isinstance(paragraph_to_comment, Paragraph):
-                    comment_to_send.clear()
-                    stats_to_compare = self.table_name_checklist
-                    paragraph_stats["format_regex"] = paragraph_to_comment.text
-                    run_comments = self.get_error_comment(stats_to_compare, paragraph_stats)
-                    # print(run_comments)
-                    for comment in run_comments:
-                        comment_to_send.add(comment)
-                    comment_type = "Название таблицы"
-                    # print('///', paragraph_to_comment.text, comment_to_send)
+                if self.enable_optional_settings["table_title"]:
+                    if isinstance(paragraph_to_comment, Paragraph):
+                        comment_to_send.clear()
+                        stats_to_compare = self.table_name_checklist
+                        paragraph_stats["format_regex"] = paragraph_to_comment.text
+                        run_comments = self.get_error_comment(stats_to_compare, paragraph_stats)
+                        # print(run_comments)
+                        for comment in run_comments:
+                            comment_to_send.add(comment)
+                        comment_type = "Название таблицы"
+                    else:
+                        next_comment_to_send.add("Нет названия таблицы!\n")
+
                 # print("Table:", block)
                 paragraph_chosen = False
                 for row_count, row in enumerate(block.rows):
@@ -509,34 +563,29 @@ class DocumentParser:
                                         stats_to_compare = self.table_text_checklist
 
                                     run_comments = self.get_error_comment(stats_to_compare, paragraph_stats)
-                                    # print(run_comments)
-                                    ''' print(par.text)
-                                    print(par.style.name)
-                                    print(paragraph_stats)
-                                    print(stats_to_compare)'''
-                                    # print(list(map(lambda k, v: v == stats_to_compare[k], paragraph_stats.keys(), paragraph_stats.values())))
                                     for comment in run_comments:
                                         next_comment_to_send.add(comment)
                                     next_comment_type = self.set_comment_name("Таблица", next_comment_type,
-                                                                         lock_comment_name)
+                                                                              lock_comment_name)
                         col_count += 1
 
-            # print(paragraph_to_comment, comment_to_send)
             if isinstance(paragraph_to_comment, Paragraph) and len(comment_to_send) > 0:
                 paragraph_to_comment.add_comment(''.join(comment_to_send), author=comment_type)
                 comment_count += 1
                 written_comments.append(comment_to_send)
+
             paragraph_to_comment = next_paragraph_to_comment
             comment_to_send = next_comment_to_send
             comment_type = next_comment_type
+
             image_name_check -= 1 if image_name_check > 0 else 0
             text_after_table_check -= 1 if text_after_table_check > 0 else 0
+
         if isinstance(paragraph_to_comment, Paragraph) and len(comment_to_send) > 0:
             paragraph_to_comment.add_comment(''.join(comment_to_send), author=comment_type)
             comment_count += 1
             written_comments.append(comment_to_send)
 
-        file, extension = os.path.splitext(filename)
         basename, extension = os.path.splitext(os.path.basename(filename))
         try:
             Path('./Results').mkdir(parents=True, exist_ok=False)
@@ -557,10 +606,10 @@ class DocumentParser:
 
 if __name__ == '__main__':
     parser = DocumentParser()
-    parser.set_settings(default_text_checklist, default_heading1_checklist, default_heading2_checklist,
+    '''parser.set_settings(default_text_checklist, default_heading1_checklist, default_heading2_checklist,
                         default_heading3_checklist, default_table_name_checklist, default_table_headings_checklist,
                         default_table_text_checklist, default_list_checklist, default_margins_checklist,
-                        default_image_checklist, default_image_name_checklist)
+                        default_image_checklist, default_image_name_checklist)'''
 
-    filename = "result.docx"
+    filename = "t.docx"
     parser.parse_document(filename)

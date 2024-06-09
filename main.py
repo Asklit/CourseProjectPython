@@ -531,7 +531,6 @@ class MainWindow(QMainWindow):
         self.table_checklist = {
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт
             "font_size": float(self.SettingsWindow.ui.LETableFontSize.text()),  # Размер шрифта в таблице
-            "paragraph_before_table": self.SettingsWindow.ui.CBTableParagraphBeforeTable.isChecked(),  # Параграф перед таблицей
             "space_before": float(self.SettingsWindow.ui.LETableSpacingBefore.text()),
             "space_after": float(self.SettingsWindow.ui.LETableSpacingAfter.text()),
             "left_indent": 0,  # нет такого в UI
@@ -551,8 +550,6 @@ class MainWindow(QMainWindow):
             "font_bald": self.SettingsWindow.ui.CBTableBold.isChecked(),  # Жирный шрифт заголовков
             "font_italic": self.SettingsWindow.ui.CBTableItalic.isChecked(),  # Курсив заголовков
             "font_underline": self.SettingsWindow.ui.CBTableUnderline.isChecked(),  # Подчеркивание заголовков
-            "heading_left": self.SettingsWindow.ui.CBTableHeadingLeft.isChecked(),  # Необходимость заголовков слева
-            "heading_top": self.SettingsWindow.ui.CBTableHeadingTop.isChecked(),  # Необходимость заголовков сверху
             "alignment": heading_alignment,
             "vertical_alignment": vertical_alignment
             }
@@ -584,7 +581,6 @@ class MainWindow(QMainWindow):
         }
 
         self.title_picture_checklist = {
-            "enable_pic_title": self.SettingsWindow.ui.CBPictureTitle.isChecked(),
             "font_name": self.SettingsWindow.ui.CBFontName.currentText(),  # Шрифт подписи под рисунком
             "font_size": float(self.SettingsWindow.ui.LEPictureFontSize.text()),  # Размер подписи под рисунком
             "font_bald": self.SettingsWindow.ui.CBPictureTitleBold.isChecked(),  # Выделение жирным шрифтом

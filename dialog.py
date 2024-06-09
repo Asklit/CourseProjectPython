@@ -2,7 +2,6 @@ import sys
 
 from PyQt5 import uic, QtGui
 from PyQt5.QtWidgets import QDialog, QPushButton, QGridLayout, QLabel, QHBoxLayout
-from PyQt6.QtWidgets import QDialogButtonBox
 from PyQt5.QtCore import Qt
 
 
