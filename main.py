@@ -5,12 +5,13 @@ import pathlib
 from multiprocessing import Pool
 from multiprocessing.managers import SyncManager, BaseManager
 import time
-import dill
 
 
 from PyQt5 import uic, QtCore, QtGui
-from PyQt5.QtCore import QRunnable, Qt, QThreadPool, QThread, QObject, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
+from PyQt5.QtCore import QRunnable, Qt, QThreadPool, QThread, QObject, pyqtSignal, QSettings, QRect
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog
+
+from dialog import QDialogClass
 from settings import SettingsWindow
 import keyboard
 from docx.enum.section import WD_ORIENTATION
@@ -57,7 +58,7 @@ class MainWindow(QMainWindow):
         self.fileFlag = False
         self.fileNames = []  # Список путей до выбранных файлов
         self.ui = uic.loadUi('uiMainFile.ui', self)  # Открытие файла ui
-
+        self.ui.setFixedSize(940, 680)
         # Параметры форматирования документа
         self.text_checklist = None
         self.heading1_checklist = None
@@ -72,7 +73,9 @@ class MainWindow(QMainWindow):
         self.table_title_checklist = None
         self.enable_optional_settings = None
 
-
+        self.dlg = None
+        self.settings = QSettings("Checker", "CheckerUserConfigs", self)
+        self.loadSettings()
 
         self.proc = None
         self.explorer = None
@@ -96,6 +99,173 @@ class MainWindow(QMainWindow):
         self.doc_checked_count = 0
 
         self.thread = None
+
+    def closeEvent(self, event):
+        self.dlg = QDialogClass(self)
+        if self.dlg.exec_() == QDialog.Accepted:
+            event.accept()
+        else:
+            event.ignore()
+
+    def saveSettings(self):
+        if self.isActiveWindow():
+            self.settings.setValue("geometry", self.geometry())
+        else:
+            self.settings.setValue("geometry", self.SettingsWindow.geometry())
+
+        self.saveSettingsDefaultPage()
+        self.saveSettingsDefaultHeadings()
+        self.saveSettingsDefaultMainText()
+        self.saveSettingsDefaultTable()
+        self.saveSettingsDefaultPicture()
+
+    def loadSettings(self):
+        if self.settings.value("geometry"):
+            self.setGeometry(self.settings.value("geometry"))
+        self.SettingsWindow.setUserSettings()
+
+    def saveSettingsDefaultPage(self):
+        self.settings.setValue("LEFieldsBottom", self.SettingsWindow.ui.LEFieldsBottom.text())
+        self.settings.setValue("LEFieldsTop", self.SettingsWindow.ui.LEFieldsTop.text())
+        self.settings.setValue("LEFieldsLeft", self.SettingsWindow.ui.LEFieldsLeft.text())
+        self.settings.setValue("LEFieldsRight", self.SettingsWindow.ui.LEFieldsRight.text())
+
+        self.settings.setValue("CBFontName", self.SettingsWindow.ui.CBFontName.currentIndex())
+
+        self.settings.setValue("btnNumerationDown", self.SettingsWindow.ui.btnNumerationDown.isChecked())
+        self.settings.setValue("btnNumerationTop", self.SettingsWindow.ui.btnNumerationTop.isChecked())
+        self.settings.setValue("btnNumerationLeft", self.SettingsWindow.ui.btnNumerationLeft.isChecked())
+        self.settings.setValue("btnNumerationRight", self.SettingsWindow.ui.btnNumerationRight.isChecked())
+
+        self.settings.setValue("LENumerationStartFrom", self.SettingsWindow.ui.LENumerationStartFrom.text())
+
+        self.settings.setValue("PortraitOrientation", self.SettingsWindow.ui.PortraitOrientation.isChecked())
+        self.settings.setValue("LandscapeOrientation", self.SettingsWindow.ui.LandscapeOrientation.isChecked())
+
+    def saveSettingsDefaultHeadings(self):
+        self.settings.setValue("LEFirstLvlSpacingAfter", self.SettingsWindow.ui.LEFirstLvlSpacingAfter.text())
+        self.settings.setValue("LEFirstLvlSize", self.SettingsWindow.ui.LEFirstLvlSize.text())
+        self.settings.setValue("LEFirstLvlSpacingBefore", self.SettingsWindow.ui.LEFirstLvlSpacingBefore.text())
+        self.settings.setValue("LESecondLvlSpacingBefore", self.SettingsWindow.ui.LESecondLvlSpacingBefore.text())
+        self.settings.setValue("LESecondLvlSize", self.SettingsWindow.ui.LESecondLvlSize.text())
+        self.settings.setValue("LESecondLvlSpacingAfter", self.SettingsWindow.ui.LESecondLvlSpacingAfter.text())
+        self.settings.setValue("LEThirdLvlSpacingBefore", self.SettingsWindow.ui.LEThirdLvlSpacingBefore.text())
+        self.settings.setValue("LEThirdLvlSize", self.SettingsWindow.ui.LEThirdLvlSize.text())
+        self.settings.setValue("LEThirdLvlSpacingAfter", self.SettingsWindow.ui.LEThirdLvlSpacingAfter.text())
+
+        self.settings.setValue("CBLVL1CheckNumeration", self.SettingsWindow.ui.CBLVL1CheckNumeration.isChecked())
+        self.settings.setValue("CBLVL1NotSpacing", self.SettingsWindow.ui.CBLVL1NotSpacing.isChecked())
+        self.settings.setValue("CBLVL1NewPage", self.SettingsWindow.ui.CBLVL1NewPage.isChecked())
+
+        self.settings.setValue("CBLVL2CheckNumeration", self.SettingsWindow.ui.CBLVL2CheckNumeration.isChecked())
+        self.settings.setValue("CBLVL2NotSpacing", self.SettingsWindow.ui.CBLVL2NotSpacing.isChecked())
+        self.settings.setValue("CBLVL2NewPage", self.SettingsWindow.ui.CBLVL2NewPage.isChecked())
+
+        self.settings.setValue("CBLVL3CheckNumeration", self.SettingsWindow.ui.CBLVL3CheckNumeration.isChecked())
+        self.settings.setValue("CBLVL3NotSpacing", self.SettingsWindow.ui.CBLVL3NotSpacing.isChecked())
+        self.settings.setValue("CBLVL3NewPage", self.SettingsWindow.ui.CBLVL3NewPage.isChecked())
+
+        self.settings.setValue("CBLVL1Bold", self.SettingsWindow.ui.CBLVL1Bold.isChecked())
+        self.settings.setValue("CBLVL1Italic", self.SettingsWindow.ui.CBLVL1Italic.isChecked())
+        self.settings.setValue("CBLVL1Underline", self.SettingsWindow.ui.CBLVL1Underline.isChecked())
+
+        self.settings.setValue("CBLVL2Bold", self.SettingsWindow.ui.CBLVL2Bold.isChecked())
+        self.settings.setValue("CBLVL2Italic", self.SettingsWindow.ui.CBLVL2Italic.isChecked())
+        self.settings.setValue("CBLVL2Underline", self.SettingsWindow.ui.CBLVL2Underline.isChecked())
+
+        self.settings.setValue("CBLVL3Bold", self.SettingsWindow.ui.CBLVL3Bold.isChecked())
+        self.settings.setValue("CBLVL3Italic", self.SettingsWindow.ui.CBLVL3Italic.isChecked())
+        self.settings.setValue("CBLVL3Underline", self.SettingsWindow.ui.CBLVL3Underline.isChecked())
+
+        self.settings.setValue("RBLVL1TextLeft", self.SettingsWindow.ui.RBLVL1TextLeft.isChecked())
+        self.settings.setValue("RBLVL1TextMiddle", self.SettingsWindow.ui.RBLVL1TextMiddle.isChecked())
+        self.settings.setValue("RBLVL1TextRight", self.SettingsWindow.ui.RBLVL1TextRight.isChecked())
+        self.settings.setValue("RBLVL1TextWidth", self.SettingsWindow.ui.RBLVL1TextWidth.isChecked())
+
+        self.settings.setValue("RBLVL2TextLeft", self.SettingsWindow.ui.RBLVL2TextLeft.isChecked())
+        self.settings.setValue("RBLVL2TextMiddle", self.SettingsWindow.ui.RBLVL2TextMiddle.isChecked())
+        self.settings.setValue("RBLVL2TextRight", self.SettingsWindow.ui.RBLVL2TextRight.isChecked())
+        self.settings.setValue("RBLVL2TextWidth", self.SettingsWindow.ui.RBLVL2TextWidth.isChecked())
+
+        self.settings.setValue("RBLVL3TextLeft", self.SettingsWindow.ui.RBLVL3TextLeft.isChecked())
+        self.settings.setValue("RBLVL3TextMiddle", self.SettingsWindow.ui.RBLVL3TextMiddle.isChecked())
+        self.settings.setValue("RBLVL3TextRight", self.SettingsWindow.ui.RBLVL3TextRight.isChecked())
+        self.settings.setValue("RBLVL3TextWidth", self.SettingsWindow.ui.RBLVL3TextWidth.isChecked())
+
+    def saveSettingsDefaultMainText(self):
+        self.settings.setValue("LEMainTextSpacingBefore", self.SettingsWindow.ui.LEMainTextSpacingBefore.text())
+        self.settings.setValue("LEMainTextSpacingAfter", self.SettingsWindow.ui.LEMainTextSpacingAfter.text())
+        self.settings.setValue("LEMainTextSize", self.SettingsWindow.ui.LEMainTextSize.text())
+        self.settings.setValue("LEMainTextSpacingBetween", self.SettingsWindow.ui.LEMainTextSpacingBetween.text())
+        self.settings.setValue("LEMainTextSpacingParagraph", self.SettingsWindow.ui.LEMainTextSpacingParagraph.text())
+
+        self.settings.setValue("CBMainTextBold", self.SettingsWindow.ui.CBMainTextBold.isChecked())
+        self.settings.setValue("CBMainTextItalic", self.SettingsWindow.ui.CBMainTextItalic.isChecked())
+        self.settings.setValue("CBMainTextUnderline", self.SettingsWindow.ui.CBMainTextUnderline.isChecked())
+
+        self.settings.setValue("RBMainTextLeft", self.SettingsWindow.ui.RBMainTextLeft.isChecked())
+        self.settings.setValue("RBMainTextMiddle", self.SettingsWindow.ui.RBMainTextMiddle.isChecked())
+        self.settings.setValue("RBMainTextRight", self.SettingsWindow.ui.RBMainTextRight.isChecked())
+        self.settings.setValue("RBMainTextWidth", self.SettingsWindow.ui.RBMainTextWidth.isChecked())
+
+    def saveSettingsDefaultTable(self):
+        self.settings.setValue("LETableFontSize", self.SettingsWindow.ui.LETableFontSize.text())
+        self.settings.setValue("CBTableParagraphBeforeTable", self.SettingsWindow.ui.CBTableParagraphBeforeTable.isChecked())
+        self.settings.setValue("CBTableFormatParagraph", self.SettingsWindow.ui.CBTableFormatParagraph.currentIndex())
+
+        self.settings.setValue("LETableSpacingBefore", self.SettingsWindow.ui.LETableSpacingBefore.text())
+        self.settings.setValue("LETableSpacingAfter", self.SettingsWindow.ui.LETableSpacingAfter.text())
+        self.settings.setValue("LETabletSpacingBetween", self.SettingsWindow.ui.LETabletSpacingBetween.text())
+        self.settings.setValue("LETableSpacingParagraph", self.SettingsWindow.ui.LETableSpacingParagraph.text())
+        self.settings.setValue("LETableParagraphSpacingAfter", self.SettingsWindow.ui.LETableParagraphSpacingAfter.text())
+
+        self.settings.setValue("CBTableHeadingTop", self.SettingsWindow.ui.CBTableHeadingTop.isChecked())
+        self.settings.setValue("CBTableHeadingLeft", self.SettingsWindow.ui.CBTableHeadingLeft.isChecked())
+
+        self.settings.setValue("CBTableBold", self.SettingsWindow.ui.CBTableBold.isChecked())
+        self.settings.setValue("CBTableItalic", self.SettingsWindow.ui.CBTableItalic.isChecked())
+        self.settings.setValue("CBTableUnderline", self.SettingsWindow.ui.CBTableUnderline.isChecked())
+
+        self.settings.setValue("RBTableHeadingTextLeft", self.SettingsWindow.ui.RBTableHeadingTextLeft.isChecked())
+        self.settings.setValue("RBTableHeadingTextMiddle", self.SettingsWindow.ui.RBTableHeadingTextMiddle.isChecked())
+        self.settings.setValue("RBTableHeadingTextRight", self.SettingsWindow.ui.RBLVL2TextRight.isChecked())
+
+        self.settings.setValue("RBTableTextLeft", self.SettingsWindow.ui.RBTableTextLeft.isChecked())
+        self.settings.setValue("RBTableTextMiddle", self.SettingsWindow.ui.RBTableTextMiddle.isChecked())
+        self.settings.setValue("RBTableTextRight", self.SettingsWindow.ui.RBTableTextRight.isChecked())
+
+        self.settings.setValue("RBTableTextTop", self.SettingsWindow.ui.RBTableTextTop.isChecked())
+        self.settings.setValue("RBTableTextMiddle_2", self.SettingsWindow.ui.RBTableTextMiddle_2.isChecked())
+        self.settings.setValue("RBTableTextBottom", self.SettingsWindow.ui.RBTableTextBottom.isChecked())
+
+    def saveSettingsDefaultPicture(self):
+        self.settings.setValue("LEPictureSpacingBefore", self.SettingsWindow.ui.LEPictureSpacingBefore.text())
+        self.settings.setValue("LEPictureSpacingAfter", self.SettingsWindow.ui.LEPictureSpacingAfter.text())
+        self.settings.setValue("LEPicturetSpacingParagraph", self.SettingsWindow.ui.LEPicturetSpacingParagraph.text())
+        self.settings.setValue("LEPictureSpacingBetween", self.SettingsWindow.ui.LEPictureSpacingBetween.text())
+
+        self.settings.setValue("CBPictureNotSpacing", self.SettingsWindow.ui.CBPictureNotSpacing.isChecked())
+
+        self.settings.setValue("RBPictureLeft", self.SettingsWindow.ui.RBPictureLeft.isChecked())
+        self.settings.setValue("RBPictureMiddle", self.SettingsWindow.ui.RBPictureMiddle.isChecked())
+        self.settings.setValue("RBPictureRight", self.SettingsWindow.ui.RBPictureRight.isChecked())
+
+        self.settings.setValue("CBPictureTitle", self.SettingsWindow.ui.CBPictureTitle.isChecked())
+        self.settings.setValue("CBPictureTitleFormat", self.SettingsWindow.ui.CBPictureTitleFormat.currentIndex())
+
+        self.settings.setValue("LEPictureFontSize", self.SettingsWindow.ui.LEPictureFontSize.text())
+        self.settings.setValue("LEPictureTitleSpacingBefore", self.SettingsWindow.ui.LEPictureTitleSpacingBefore.text())
+        self.settings.setValue("LEPictureTitleSpacingAfter", self.SettingsWindow.ui.LEPictureTitleSpacingAfter.text())
+        self.settings.setValue("LEPictureTitleSpacingBetween", self.SettingsWindow.ui.LEPictureTitleSpacingBetween.text())
+        self.settings.setValue("LEPictureTitleSpacingFirstLine", self.SettingsWindow.ui.LEPictureTitleSpacingFirstLine.text())
+
+        self.settings.setValue("RBPictureTitleLeft", self.SettingsWindow.ui.RBPictureTitleLeft.isChecked())
+        self.settings.setValue("RBPictureTitleMiddle", self.SettingsWindow.ui.RBPictureTitleMiddle.isChecked())
+        self.settings.setValue("RBPictureTitleRight", self.SettingsWindow.ui.RBPictureTitleRight.isChecked())
+
+        self.settings.setValue("CBPictureTitleUnderline", self.SettingsWindow.ui.CBPictureTitleUnderline.isChecked())
+        self.settings.setValue("CBPictureTitleItalic", self.SettingsWindow.ui.CBPictureTitleItalic.isChecked())
+        self.settings.setValue("CBPictureTitleBold", self.SettingsWindow.ui.CBPictureTitleBold.isChecked())
 
     def openDocumentation(self):
         if self.proc is not None:
@@ -430,6 +600,7 @@ class MainWindow(QMainWindow):
 
     def setupSettings(self):  # Запуск окна настроек
         self.hide()
+        self.SettingsWindow.setGeometry(self.geometry())
         self.SettingsWindow.show()
 
 
