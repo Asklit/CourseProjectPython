@@ -131,7 +131,7 @@ class SettingsWindow(QWidget):
         self.ui.RBMainTextLeft.setChecked(self.main.settings.value("RBMainTextLeft", False, type=bool))
         self.ui.RBMainTextMiddle.setChecked(self.main.settings.value("RBMainTextMiddle", False, type=bool))
         self.ui.RBMainTextRight.setChecked(self.main.settings.value("RBMainTextRight", False, type=bool))
-        self.ui.RBMainTextWidth.setChecked(self.main.settings.value("RBMainTextRight", True, type=bool))
+        self.ui.RBMainTextWidth.setChecked(self.main.settings.value("RBMainTextWidth", True, type=bool))
 
     def setUserSettingsTable(self):
         self.ui.LETableFontSize.setText(self.main.settings.value("LETableFontSize", "12"))
