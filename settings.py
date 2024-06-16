@@ -49,6 +49,7 @@ class SettingsWindow(QWidget):
         self.setUserSettingsPage()
         self.setUserSettingsHeadings()
         self.setUserSettingsMainText()
+        self.setUserSettingsList()
         self.setUserSettingsTable()
         self.setUserSettingsPicture()
 
@@ -133,6 +134,12 @@ class SettingsWindow(QWidget):
         self.ui.RBMainTextRight.setChecked(self.main.settings.value("RBMainTextRight", False, type=bool))
         self.ui.RBMainTextWidth.setChecked(self.main.settings.value("RBMainTextWidth", True, type=bool))
 
+    def setUserSettingsList(self):
+        self.ui.LEListMarginLeft.setText(self.main.settings.value("LEListMarginLeft", "1.25"))
+        self.ui.LEListMarginModify.setText(self.main.settings.value("LEListMarginModify", "0.75"))
+        self.ui.LEListLedge.setText(self.main.settings.value("LEListLedge", "0.75"))
+        self.ui.CBListReminder.setChecked(self.main.settings.value("CBListReminder", True, type=bool))
+
     def setUserSettingsTable(self):
         self.ui.LETableFontSize.setText(self.main.settings.value("LETableFontSize", "12"))
         self.ui.CBTableParagraphBeforeTable.setChecked(self.main.settings.value("CBTableParagraphBeforeTable", True, type=bool))
@@ -197,6 +204,7 @@ class SettingsWindow(QWidget):
         lst = [self.setDefaultPage,
                self.setDefaultHeadings,
                self.setDefaultMainText,
+               self.setDefaultList,
                self.setDefaultTable,
                self.setDefaultPicture]
         lst[self.tabWidget.currentIndex()]()
@@ -257,6 +265,12 @@ class SettingsWindow(QWidget):
         self.ui.CBMainTextItalic.setChecked(False)
         self.ui.CBMainTextUnderline.setChecked(False)
         self.ui.RBMainTextWidth.setChecked(True)
+
+    def setDefaultList(self):
+        self.ui.LEListMarginLeft.setText("1.25")
+        self.ui.LEListMarginModify.setText("0.75")
+        self.ui.LEListLedge.setText("0.75")
+        self.ui.CBListReminder.setChecked(True)
 
     def setDefaultTable(self):
         self.ui.LETableFontSize.setText("12")
@@ -323,6 +337,9 @@ class SettingsWindow(QWidget):
         self.ui.LEMainTextSize.setValidator(regex)
         self.ui.LEMainTextSpacingBetween.setValidator(regex)
         self.ui.LEMainTextSpacingParagraph.setValidator(regex)
+
+        self.ui.LEListMarginLeft.setValidator(regex)
+        self.ui.LEListMarginModify.setValidator(regex)
 
         self.ui.LETableFontSize.setValidator(regex)
 

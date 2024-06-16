@@ -116,6 +116,7 @@ class MainWindow(QMainWindow):
         self.saveSettingsDefaultPage()
         self.saveSettingsDefaultHeadings()
         self.saveSettingsDefaultMainText()
+        self.saveSettingsDefaultList()
         self.saveSettingsDefaultTable()
         self.saveSettingsDefaultPicture()
 
@@ -207,6 +208,12 @@ class MainWindow(QMainWindow):
         self.settings.setValue("RBMainTextMiddle", self.SettingsWindow.ui.RBMainTextMiddle.isChecked())
         self.settings.setValue("RBMainTextRight", self.SettingsWindow.ui.RBMainTextRight.isChecked())
         self.settings.setValue("RBMainTextWidth", self.SettingsWindow.ui.RBMainTextWidth.isChecked())
+
+    def saveSettingsDefaultList(self):
+        self.settings.setValue("LEListMarginLeft", self.SettingsWindow.ui.LEListMarginLeft.text())
+        self.settings.setValue("LEListMarginModify", self.SettingsWindow.ui.LEListMarginModify.text())
+        self.settings.setValue("LEListLedge", self.SettingsWindow.ui.LEListLedge.text())
+        self.settings.setValue("CBListReminder", self.SettingsWindow.ui.CBListReminder.isChecked())
 
     def saveSettingsDefaultTable(self):
         self.settings.setValue("LETableFontSize", self.SettingsWindow.ui.LETableFontSize.text())
@@ -344,6 +351,7 @@ class MainWindow(QMainWindow):
             "table_title": self.SettingsWindow.ui.CBTableParagraphBeforeTable.isChecked(),  # Параграф перед таблицей
             "paragraph_after_table": True,
             "enable_pic_title": self.SettingsWindow.ui.CBPictureTitle.isChecked(),
+            "list_reminder": self.SettingsWindow.ui.CBListReminder.isChecked()
         }
 
     def getSettings(self):
@@ -352,6 +360,7 @@ class MainWindow(QMainWindow):
         self.getHeading2Settings()
         self.getHeading3Settings()
         self.getPageSettings()
+        self.getListSettings()
         self.getPictureSettings()
         self.getTableSettings()
 
@@ -501,6 +510,13 @@ class MainWindow(QMainWindow):
             "NumberingPosition": numbering_position,  # Позиция нумерации (сверху, снизу, справа, слева)
             "NumberingStartFrom": self.SettingsWindow.ui.LENumerationStartFrom.text(),  # Число, с которого начинается нумерация
             "orientation": orientation
+        }
+
+    def getListSettings(self):
+        self.list_checklist = {
+            "left_indent_base": self.SettingsWindow.ui.LEListMarginLeft.text(),
+            "left_indent_mod": self.SettingsWindow.ui.LEListMarginModify.text(),
+            "first_line_indent": self.SettingsWindow.ui.LEListLedge.text(),
         }
 
     def getTableSettings(self):
