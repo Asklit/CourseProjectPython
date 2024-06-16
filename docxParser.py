@@ -216,6 +216,8 @@ class DocumentParser:
             self.table_text_checklist.set_settings(table_text_check)
         if isinstance(list_check, dict):
             self.list_checklist.set_settings(list_check)
+            if "left_indent_base" in list_check:
+                self.list_checklist.left_indent_base -= 0.75
         if isinstance(page_check, dict):
             self.margins_checklist.set_settings(page_check)
         if isinstance(pic_check, dict):
