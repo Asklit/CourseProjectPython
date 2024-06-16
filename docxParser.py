@@ -202,7 +202,6 @@ class DocumentParser:
             self.text_after_table_checklist.set_settings(text_check)
             self.text_after_table_checklist.space_before = 13.0  # !!!!
             self.list_checklist.set_settings(text_check)
-            self.list_checklist.set_settings(default_list_checklist)  # !!!!
         if isinstance(h1_check, dict):
             self.heading1_checklist.set_settings(h1_check)
         if isinstance(h2_check, dict):
@@ -216,9 +215,7 @@ class DocumentParser:
         if isinstance(table_text_check, dict):
             self.table_text_checklist.set_settings(table_text_check)
         if isinstance(list_check, dict):
-
             self.list_checklist.set_settings(list_check)
-
         if isinstance(page_check, dict):
             self.margins_checklist.set_settings(page_check)
         if isinstance(pic_check, dict):
@@ -454,6 +451,7 @@ class DocumentParser:
                         list_start = True
                         block.add_comment(''.join(self.list_checklist.list_reminder),
                                           author="Напоминание о формате списков")
+                        written_comments.append(self.list_checklist.list_reminder)
                 else:
                     list_start = False
 
@@ -462,6 +460,7 @@ class DocumentParser:
                     margin_comments = self.parse_margins(document)
                     for section, comments in margin_comments.items():
                         block.add_comment(''.join(comments), author=section)
+                        written_comments.append(comments)
                 for run in block.runs:
                     xmlstr = str(run.element.xml)
                     my_namespaces = dict([node for _, node in ET.iterparse(StringIO(xmlstr), events=['start-ns'])])
