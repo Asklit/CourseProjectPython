@@ -216,8 +216,8 @@ class DocumentParser:
             self.table_text_checklist.set_settings(table_text_check)
         if isinstance(list_check, dict):
             self.list_checklist.set_settings(list_check)
-            if "left_indent_base" in list_check:
-                self.list_checklist.left_indent_base -= 0.75
+            # if "left_indent_base" in list_check:
+                # self.list_checklist.left_indent_base -= 0.75
         if isinstance(page_check, dict):
             self.margins_checklist.set_settings(page_check)
         if isinstance(pic_check, dict):
@@ -450,11 +450,12 @@ class DocumentParser:
             if 'text' in str(block):
                 if self.is_list(block):
                     if not list_start:
+                        # print(block.text)
                         list_start = True
                         block.add_comment(''.join(self.list_checklist.list_reminder),
                                           author="Напоминание о формате списков")
                         written_comments.append(self.list_checklist.list_reminder)
-                else:
+                elif block.text != "":
                     list_start = False
 
                 if first_paragraph_not_reached:
@@ -504,6 +505,7 @@ class DocumentParser:
                                     paragraph_stats["list_level"] = block.list_info[2]
                                 else:
                                     paragraph_stats["list_level"] = 0
+
                                 next_comment_type = self.set_comment_name("Элемент списка", next_comment_type,
                                                                           lock_comment_name)
 
@@ -521,6 +523,8 @@ class DocumentParser:
                             else:
                                 stats_to_compare = self.text_checklist
                                 next_comment_type = self.set_comment_name("Абзац", next_comment_type, lock_comment_name)
+                            if paragraph_stats["first_line_indent"] < 0:
+                                paragraph_stats["left_indent"] += paragraph_stats["first_line_indent"]
                             run_comments = self.get_error_comment(stats_to_compare, paragraph_stats)
                             for comment in run_comments:
                                 next_comment_to_send.add(comment)
@@ -612,5 +616,5 @@ if __name__ == '__main__':
                         default_table_text_checklist, default_list_checklist, default_margins_checklist,
                         default_image_checklist, default_image_name_checklist)'''
 
-    filename = "t.docx"
+    filename = "testDocs/testTables.docx"
     parser.parse_document(filename)
