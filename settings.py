@@ -198,7 +198,7 @@ class SettingsWindow(QWidget):
                self.setDefaultList,
                self.setDefaultTable,
                self.setDefaultPicture]
-        lst[self.tabWidget.currentIndex()]()
+        lst[self.ui.tabWidget.currentIndex()]()
 
     def setDefaultPage(self):
         self.ui.LEFieldsBottom.setText("2")

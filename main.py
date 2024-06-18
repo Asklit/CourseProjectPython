@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 import pathlib
-from multiprocessing import Pool, freeze_support
+import multiprocessing
 from multiprocessing.managers import SyncManager, BaseManager
 import time
 
@@ -40,7 +40,7 @@ class Worker(QThread):
         self.doc_progressed.emit()
 
     def run(self):
-        pool = Pool()
+        pool = multiprocessing.Pool()
         parser = self.parser
         for filename in self.filenames:
             pool.apply_async(parse_docx, args=(filename, parser), callback=self.doc_finished)
@@ -604,7 +604,7 @@ if __name__ == '__main__':  # Запуск программы
     app = QApplication(sys.argv)
     ex = MainWindow()
     ex.show()
-    freeze_support()
+    multiprocessing.freeze_support()
     sys.excepthook = except_hook
 
     sys.exit(app.exec())
