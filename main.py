@@ -268,7 +268,7 @@ class MainWindow(QMainWindow):
     def openDocumentation(self):
         if self.proc is not None:
             self.proc.kill()
-
+        # 123
         if self.isActiveWindow():
             self.proc = subprocess.Popen("hh.exe -mapid" + "100" + " Help Menu.chm")
         else:
