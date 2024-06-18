@@ -10,6 +10,7 @@ class QDialogClass(QDialog):
         super(QDialogClass, self).__init__(parent)
         self.parent = parent
         self.main = main
+        self.setWindowTitle("HSEReportChecker")
         self.setStyleSheet("QWidget {background-color: #A0AECD;}")
         self.setFixedSize(500, 150)
         self.label = QLabel("Хотите сохранить настройки проверки?")
