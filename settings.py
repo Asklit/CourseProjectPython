@@ -7,18 +7,15 @@ from PyQt5.QtWidgets import QWidget, QApplication, QDialog
 
 from dialog import QDialogClass
 
-# from uiSettings import Ui_Settings
-
-
-# from SettingsUi import Ui_Settings
+from ui_settingswindow import Ui_Settings
 
 
 class SettingsWindow(QWidget):
     def __init__(self, *args):
         super(SettingsWindow, self).__init__()
-        # self.ui = Ui_Settings()
-        # self.ui.setupUi(self)
-        self.ui = uic.loadUi('SettingsUI.ui', self)  # Открытие файла ui
+        self.ui = Ui_Settings()
+        self.ui.setupUi(self)
+        # self.ui = uic.loadUi('SettingsUI.ui', self)  # Открытие файла ui
         self.main = args[0]
         self.ui.btnGoBack.clicked.connect(self.goBack)  # Кнопка перехода обратно в основное меню
         self.ui.btnDefaultSettings.clicked.connect(self.setDefaultSettingsByScreen)  # Кнопка установки базовых настроек
@@ -28,10 +25,6 @@ class SettingsWindow(QWidget):
         self.setGeometry(self.main.geometry())
 
         self.setWindowTitle("HSEReportChecker")
-
-        # self.onlyInt = QIntValidator()
-        # self.onlyInt.setRange(0, 30)
-        # self.onlyFloat = QRegExpValidator(QRegExp("([0-9]:2,[0-9]:2|[0-9]:2.[0-9]:2)"))
 
         self.setValidators()
 

@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 import pathlib
-from multiprocessing import Pool
+from multiprocessing import Pool, freeze_support
 from multiprocessing.managers import SyncManager, BaseManager
 import time
 
@@ -18,7 +18,7 @@ from docx.enum.section import WD_ORIENTATION
 from docx import Document
 
 from docxParser import DocumentParser
-# from uiMain import Ui_Checker
+from ui_mainwindow import Ui_Checker
 
 
 def parse_docx(filename, p):
@@ -52,13 +52,12 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        # self.ui = Ui_Checker()
-        # self.ui.setupUi(self)
+        self.ui = Ui_Checker()
+        self.ui.setupUi(self)
         self.SettingsWindow = SettingsWindow(self)
         self.fileFlag = False
         self.fileNames = []  # Список путей до выбранных файлов
-        self.ui = uic.loadUi('uiMainFile.ui', self)  # Открытие файла ui
-        self.ui.setFixedSize(940, 680)
+        # self.ui = uic.loadUi('uiMainFile.ui', self)  # Открытие файла ui
         # Параметры форматирования документа
         self.text_checklist = None
         self.heading1_checklist = None
@@ -605,6 +604,7 @@ if __name__ == '__main__':  # Запуск программы
     app = QApplication(sys.argv)
     ex = MainWindow()
     ex.show()
+    freeze_support()
     sys.excepthook = except_hook
 
     sys.exit(app.exec())
