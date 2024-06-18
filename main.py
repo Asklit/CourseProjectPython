@@ -54,7 +54,9 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_Checker()
         self.ui.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon('_internal\icon.png'))
         self.SettingsWindow = SettingsWindow(self)
+        self.SettingsWindow.setWindowIcon(QtGui.QIcon('_internal\icon.png'))
         self.fileFlag = False
         self.fileNames = []  # Список путей до выбранных файлов
         # self.ui = uic.loadUi('uiMainFile.ui', self)  # Открытие файла ui
@@ -270,15 +272,15 @@ class MainWindow(QMainWindow):
             self.proc.kill()
         # 123
         if self.isActiveWindow():
-            self.proc = subprocess.Popen("hh.exe -mapid" + "100" + " Help Menu.chm")
+            self.proc = subprocess.Popen("hh.exe -mapid" + "100" + " _internal\\Help Menu.chm")
         else:
-            self.proc = subprocess.Popen("hh.exe -mapid" + "20" + str(self.SettingsWindow.ui.tabWidget.currentIndex() + 1) + " Help Menu.chm")
+            self.proc = subprocess.Popen("hh.exe -mapid" + "20" + str(self.SettingsWindow.ui.tabWidget.currentIndex() + 1) + " _internal\\Help Menu.chm")
 
     def openExplorer(self):
         if self.explorer is not None:
             self.explorer.kill()
 
-        self.explorer = subprocess.Popen(f'explorer "{self.file_path}\Results"')
+        self.explorer = subprocess.Popen(f'explorer "{self.file_path}\..\Results"')
 
     def chooseFile(self):  # Выбор файла
         self.ui.LEResLine.hide()
