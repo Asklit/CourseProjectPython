@@ -37,6 +37,7 @@ class Worker(QThread):
         self.parser = parser
 
     def doc_finished(self, res):
+
         self.doc_progressed.emit()
 
     def run(self):
@@ -306,6 +307,13 @@ class MainWindow(QMainWindow):
         self.ui.LEResLine.setText(f"Проверено файлов: {self.doc_checked_count}")
 
     def on_checking_finished(self):
+        self.ui.btnChooseFile.setEnabled(True)
+        self.ui.btnClearFiles.setEnabled(True)
+        self.ui.btnRun.setEnabled(True)
+        self.ui.btnOpenRes.setEnabled(True)
+        self.ui.btnHelp.setEnabled(True)
+        self.ui.btnSettings.setEnabled(True)
+
         self.doc_checked_count = 0
         self.ui.btnOpenRes.show()
         self.clearFiles()
@@ -313,6 +321,14 @@ class MainWindow(QMainWindow):
 
     def runCheckingCorrectness(self):  # Запуск проверки корректности
         if self.fileFlag:
+            self.ui.btnChooseFile.setEnabled(False)
+            self.ui.btnClearFiles.setEnabled(False)
+            self.ui.btnRun.setEnabled(False)
+            self.ui.btnOpenRes.setEnabled(False)
+            self.ui.btnHelp.setEnabled(False)
+            self.ui.btnSettings.setEnabled(False)
+            self.ui.LENameFile.clearFocus()
+
             self.doc_checked_count = 0
             self.getSettings()
             self.getOptionalSettings()
