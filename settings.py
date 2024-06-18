@@ -27,6 +27,8 @@ class SettingsWindow(QWidget):
         self.dlg = None
         self.setGeometry(self.main.geometry())
 
+        self.setWindowTitle("HSEReportChecker")
+
         # self.onlyInt = QIntValidator()
         # self.onlyInt.setRange(0, 30)
         # self.onlyFloat = QRegExpValidator(QRegExp("([0-9]:2,[0-9]:2|[0-9]:2.[0-9]:2)"))
@@ -39,7 +41,7 @@ class SettingsWindow(QWidget):
         self.main.show()
 
     def closeEvent(self, event):
-        self.dlg = QDialogClass(self.main)
+        self.dlg = QDialogClass(self, self.main)
         if self.dlg.exec_() == QDialog.Accepted:
             event.accept()
         else:
@@ -60,11 +62,7 @@ class SettingsWindow(QWidget):
         self.ui.LEFieldsRight.setText(self.main.settings.value("LEFieldsRight", "1.5"))
 
         self.ui.CBFontName.setCurrentIndex(self.main.settings.value("CBFontName", 0))
-        self.ui.btnNumerationDown.setChecked(self.main.settings.value("btnNumerationDown", True, type=bool))
-        self.ui.btnNumerationTop.setChecked(self.main.settings.value("btnNumerationTop", False, type=bool))
-        self.ui.btnNumerationLeft.setChecked(self.main.settings.value("btnNumerationLeft", False, type=bool))
-        self.ui.btnNumerationRight.setChecked(self.main.settings.value("btnNumerationRight", False, type=bool))
-        self.ui.LENumerationStartFrom.setText(self.main.settings.value("LENumerationStartFrom", "1"))
+
         self.ui.PortraitOrientation.setChecked(self.main.settings.value("PortraitOrientation", True, type=bool))
         self.ui.LandscapeOrientation.setChecked(self.main.settings.value("LandscapeOrientation", False, type=bool))
 
@@ -215,8 +213,6 @@ class SettingsWindow(QWidget):
         self.ui.LEFieldsLeft.setText("3")
         self.ui.LEFieldsRight.setText("1.5")
 
-        self.ui.CBFontName.setCurrentIndex(0)
-        self.ui.btnNumerationDown.setChecked(True)
         self.ui.CBFontName.setCurrentIndex(0)
         self.ui.PortraitOrientation.setChecked(True)
 

@@ -6,9 +6,10 @@ from PyQt5.QtCore import Qt
 
 
 class QDialogClass(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, main=None):
         super(QDialogClass, self).__init__(parent)
-        self.main = parent
+        self.parent = parent
+        self.main = main
         self.setStyleSheet("QWidget {background-color: #A0AECD;}")
         self.setFixedSize(500, 150)
         self.label = QLabel("Хотите сохранить настройки проверки?")
@@ -49,7 +50,10 @@ class QDialogClass(QDialog):
 
     def save_settings(self):
         # Здесь вызывается функция сохранения настроек
-        self.main.saveSettings()
+        if self.main is None:
+            self.parent.saveSettings(self.parent.geometry())
+        else:
+            self.main.saveSettings(self.parent.geometry())
         self.accept()  # Закрыть окно
 
 

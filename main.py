@@ -73,6 +73,8 @@ class MainWindow(QMainWindow):
         self.table_title_checklist = None
         self.enable_optional_settings = None
 
+        self.setWindowTitle("HSEReportChecker")
+
         self.dlg = None
         self.settings = QSettings("Checker", "CheckerUserConfigs", self)
         self.loadSettings()
@@ -107,11 +109,8 @@ class MainWindow(QMainWindow):
         else:
             event.ignore()
 
-    def saveSettings(self):
-        if self.isActiveWindow():
-            self.settings.setValue("geometry", self.geometry())
-        else:
-            self.settings.setValue("geometry", self.SettingsWindow.geometry())
+    def saveSettings(self, geometry):
+        self.settings.setValue("geometry", geometry)
 
         self.saveSettingsDefaultPage()
         self.saveSettingsDefaultHeadings()
@@ -132,13 +131,6 @@ class MainWindow(QMainWindow):
         self.settings.setValue("LEFieldsRight", self.SettingsWindow.ui.LEFieldsRight.text())
 
         self.settings.setValue("CBFontName", self.SettingsWindow.ui.CBFontName.currentIndex())
-
-        self.settings.setValue("btnNumerationDown", self.SettingsWindow.ui.btnNumerationDown.isChecked())
-        self.settings.setValue("btnNumerationTop", self.SettingsWindow.ui.btnNumerationTop.isChecked())
-        self.settings.setValue("btnNumerationLeft", self.SettingsWindow.ui.btnNumerationLeft.isChecked())
-        self.settings.setValue("btnNumerationRight", self.SettingsWindow.ui.btnNumerationRight.isChecked())
-
-        self.settings.setValue("LENumerationStartFrom", self.SettingsWindow.ui.LENumerationStartFrom.text())
 
         self.settings.setValue("PortraitOrientation", self.SettingsWindow.ui.PortraitOrientation.isChecked())
         self.settings.setValue("LandscapeOrientation", self.SettingsWindow.ui.LandscapeOrientation.isChecked())
@@ -488,15 +480,6 @@ class MainWindow(QMainWindow):
         }
 
     def getPageSettings(self):
-        numbering_position = "Bottom"
-        if self.SettingsWindow.ui.btnNumerationTop.isChecked():
-            numbering_position = "Top"
-        elif self.SettingsWindow.ui.btnNumerationDown.isChecked():
-            numbering_position = "Bottom"
-        elif self.SettingsWindow.ui.btnNumerationLeft.isChecked():
-            numbering_position = "Left"
-        elif self.SettingsWindow.ui.btnNumerationRight.isChecked():
-            numbering_position = "Right"
 
         orientation = 0
         if self.SettingsWindow.ui.LandscapeOrientation.isChecked():
@@ -507,8 +490,6 @@ class MainWindow(QMainWindow):
             "bottom_margin": float(self.SettingsWindow.ui.LEFieldsBottom.text()),  # Поля страницы (нижнее)
             "left_margin": float(self.SettingsWindow.ui.LEFieldsLeft.text()),  # Поля страницы (левое)
             "right_margin": float(self.SettingsWindow.ui.LEFieldsRight.text()),  # Поля страницы (правое)
-            "NumberingPosition": numbering_position,  # Позиция нумерации (сверху, снизу, справа, слева)
-            "NumberingStartFrom": self.SettingsWindow.ui.LENumerationStartFrom.text(),  # Число, с которого начинается нумерация
             "orientation": orientation
         }
 
