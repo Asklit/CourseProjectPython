@@ -617,10 +617,10 @@ def except_hook(cls, exception, traceback):  # Блок для получени�
 
 
 if __name__ == '__main__':  # Запуск программы
+    multiprocessing.freeze_support()
     app = QApplication(sys.argv)
     ex = MainWindow()
     ex.show()
-    multiprocessing.freeze_support()
     sys.excepthook = except_hook
 
     sys.exit(app.exec())
