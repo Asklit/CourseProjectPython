@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 import pathlib
-from multiprocessing import Pool
+from multiprocessing import Pool, freeze_support
 from multiprocessing.managers import SyncManager, BaseManager
 import time
 
@@ -604,6 +604,7 @@ if __name__ == '__main__':  # Запуск программы
     app = QApplication(sys.argv)
     ex = MainWindow()
     ex.show()
+    freeze_support()
     sys.excepthook = except_hook
 
     sys.exit(app.exec())
