@@ -311,7 +311,6 @@ class MainWindow(QMainWindow):
         self.ui.btnClearFiles.setEnabled(True)
         self.ui.btnRun.setEnabled(True)
         self.ui.btnOpenRes.setEnabled(True)
-        self.ui.btnHelp.setEnabled(True)
         self.ui.btnSettings.setEnabled(True)
 
         self.doc_checked_count = 0
@@ -325,7 +324,6 @@ class MainWindow(QMainWindow):
             self.ui.btnClearFiles.setEnabled(False)
             self.ui.btnRun.setEnabled(False)
             self.ui.btnOpenRes.setEnabled(False)
-            self.ui.btnHelp.setEnabled(False)
             self.ui.btnSettings.setEnabled(False)
             self.ui.LENameFile.clearFocus()
 
