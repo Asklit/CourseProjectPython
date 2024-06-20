@@ -379,7 +379,7 @@ class MainWindow(QMainWindow):
             alignment = 2
         elif self.SettingsWindow.ui.RBMainTextMiddle.isChecked():
             alignment = 1
-        elif self.SettingsWindow.ui.RBMainTextLeft.isChecked():
+        elif self.SettingsWindow.ui.RBMainTextWidth.isChecked():
             alignment = 3
 
         self.text_checklist = {

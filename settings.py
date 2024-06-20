@@ -143,7 +143,7 @@ class SettingsWindow(QWidget):
         self.ui.LETableParagraphSpacingAfter.setText(self.main.settings.value("LETableParagraphSpacingAfter", "13"))
 
         self.ui.CBTableHeadingTop.setChecked(self.main.settings.value("CBTableHeadingTop.", True, type=bool))
-        self.ui.CBTableHeadingLeft.setChecked(self.main.settings.value("CBTableHeadingLeft", True, type=bool))
+        self.ui.CBTableHeadingLeft.setChecked(self.main.settings.value("CBTableHeadingLeft", False, type=bool))
 
         self.ui.CBTableBold.setChecked(self.main.settings.value("CBTableBold", True, type=bool))
         self.ui.CBTableItalic.setChecked(self.main.settings.value("CBTableItalic", False, type=bool))
@@ -273,7 +273,7 @@ class SettingsWindow(QWidget):
         self.ui.LETableParagraphSpacingAfter.setText("13")
 
         self.ui.CBTableHeadingTop.setChecked(True)
-        self.ui.CBTableHeadingLeft.setChecked(True)
+        self.ui.CBTableHeadingLeft.setChecked(False)
 
         self.ui.CBTableBold.setChecked(True)
         self.ui.CBTableItalic.setChecked(False)
