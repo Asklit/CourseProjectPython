@@ -37,7 +37,7 @@ default_heading1_checklist = {
     "left_indent": 0,
     "right_indent": 0,
     "first_line_indent": 0.0,
-    "line_spacing": 1.0,
+    "line_spacing": 1.5,
     "is_list": True
 }
 default_heading2_checklist = {
@@ -56,7 +56,7 @@ default_heading2_checklist = {
     "left_indent": 0,
     "right_indent": 0,
     "first_line_indent": 0.0,
-    "line_spacing": 1.0,
+    "line_spacing": 1.5,
     "is_list": True
 }
 default_heading3_checklist = {
@@ -75,7 +75,7 @@ default_heading3_checklist = {
     "left_indent": 0,
     "right_indent": 0,
     "first_line_indent": 0.0,
-    "line_spacing": 1.0,
+    "line_spacing": 1.5,
     "is_list": True
 }
 default_list_checklist = {
@@ -128,7 +128,7 @@ default_table_name_checklist = {
     "font_color": None,
     "font_back_color": None,
     "alignment": 0,
-    "keep_with_next": False,
+    "keep_with_next": True,
     "page_break_before": False,
     "space_before": 13.0,
     "space_after": 0.0,

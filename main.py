@@ -27,6 +27,14 @@ def parse_docx(filename, p):
         p.parse_document(filename)
 
 
+def get_internal_data(filename, *add):
+    if os.path.isdir("_internal"):
+        return f"_internal\\{filename}"
+    if len(add) > 0:
+        return f"{"\\".join(add)}\\{filename}"
+    return filename
+
+
 # Step 1: Create a worker class
 class Worker(QThread):
     doc_progressed = pyqtSignal()
@@ -55,9 +63,9 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_Checker()
         self.ui.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon('_internal\icon.png'))
+        self.setWindowIcon(QtGui.QIcon(get_internal_data('icon.png', 'icon')))
         self.SettingsWindow = SettingsWindow(self)
-        self.SettingsWindow.setWindowIcon(QtGui.QIcon('_internal\icon.png'))
+        self.SettingsWindow.setWindowIcon(QtGui.QIcon(get_internal_data('icon.png', 'icon')))
         self.fileFlag = False
         self.fileNames = []  # Список путей до выбранных файлов
         # self.ui = uic.loadUi('uiMainFile.ui', self)  # Открытие файла ui
@@ -272,16 +280,20 @@ class MainWindow(QMainWindow):
         if self.proc is not None:
             self.proc.kill()
         # 123
+        menu_path = get_internal_data('Help Menu.chm')
+        print(menu_path)
         if self.isActiveWindow():
-            self.proc = subprocess.Popen("hh.exe -mapid" + "100" + " _internal\\Help Menu.chm")
+            self.proc = subprocess.Popen("hh.exe -mapid" + "100" + f" {menu_path}")
         else:
-            self.proc = subprocess.Popen("hh.exe -mapid" + "20" + str(self.SettingsWindow.ui.tabWidget.currentIndex() + 1) + " _internal\\Help Menu.chm")
+            self.proc = subprocess.Popen("hh.exe -mapid" + "20" + str(self.SettingsWindow.ui.tabWidget.currentIndex() + 1) + f" {menu_path}")
 
     def openExplorer(self):
         if self.explorer is not None:
             self.explorer.kill()
-
-        self.explorer = subprocess.Popen(f'explorer "{self.file_path}\..\Results"')
+        if os.path.isdir("_internal"):
+            self.explorer = subprocess.Popen(f'explorer "{self.file_path}\\..\\Results"')
+        else:
+            self.explorer = subprocess.Popen(f'explorer "{self.file_path}\\Results"')
 
     def chooseFile(self):  # Выбор файла
         self.ui.LEResLine.hide()
@@ -336,6 +348,7 @@ class MainWindow(QMainWindow):
                                 self.table_checklist, self.list_checklist, self.page_checklist, self.picture_checklist,
                                 self.title_picture_checklist)
             parser.set_enable_optional_settings(self.enable_optional_settings)
+            print(parser.text_checklist.alignment)
 
             self.ui.LEResLine.setText(f"Проверено файлов: 0")
             self.ui.LEResLine.show()
@@ -379,7 +392,7 @@ class MainWindow(QMainWindow):
             alignment = 2
         elif self.SettingsWindow.ui.RBMainTextMiddle.isChecked():
             alignment = 1
-        elif self.SettingsWindow.ui.RBMainTextLeft.isChecked():
+        elif self.SettingsWindow.ui.RBMainTextWidth.isChecked():
             alignment = 3
 
         self.text_checklist = {
