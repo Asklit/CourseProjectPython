@@ -281,7 +281,6 @@ class MainWindow(QMainWindow):
             self.proc.kill()
         # 123
         menu_path = get_internal_data('Help Menu.chm')
-        print(menu_path)
         if self.isActiveWindow():
             self.proc = subprocess.Popen("hh.exe -mapid" + "100" + f" {menu_path}")
         else:
@@ -348,7 +347,6 @@ class MainWindow(QMainWindow):
                                 self.table_checklist, self.list_checklist, self.page_checklist, self.picture_checklist,
                                 self.title_picture_checklist)
             parser.set_enable_optional_settings(self.enable_optional_settings)
-            print(parser.text_checklist.alignment)
 
             self.ui.LEResLine.setText(f"Проверено файлов: 0")
             self.ui.LEResLine.show()
@@ -523,10 +521,11 @@ class MainWindow(QMainWindow):
 
     def getListSettings(self):
         self.list_checklist = {
-            "left_indent_base": self.SettingsWindow.ui.LEListMarginLeft.text(),
-            "left_indent_mod": self.SettingsWindow.ui.LEListMarginModify.text(),
-            "first_line_indent": self.SettingsWindow.ui.LEListLedge.text(),
+            "left_indent_base": float(self.SettingsWindow.ui.LEListMarginLeft.text()),
+            "left_indent_mod": float(self.SettingsWindow.ui.LEListMarginModify.text()),
+            "first_line_indent": -float(self.SettingsWindow.ui.LEListLedge.text()),
         }
+        print(self.list_checklist)
 
     def getTableSettings(self):
         alignment = 0
