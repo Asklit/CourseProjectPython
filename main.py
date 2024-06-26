@@ -399,8 +399,8 @@ class MainWindow(QMainWindow):
             "font_bald": self.SettingsWindow.ui.CBMainTextBold.isChecked(),
             "font_italic": self.SettingsWindow.ui.CBMainTextItalic.isChecked(),
             "font_underline": self.SettingsWindow.ui.CBMainTextUnderline.isChecked(),
-            "font_color": None,  # нет такого в UI
-            "font_back_color": None,  # нет такого в UI
+            "font_color": False,  # нет такого в UI
+            "font_back_color": False,  # нет такого в UI
             "alignment": alignment,
             "keep_with_next": False,  # нет такого в UI, false по умолчанию для main текста
             "page_break_before": False,  # нет такого в UI, false по умолчанию для main текста
@@ -429,8 +429,8 @@ class MainWindow(QMainWindow):
             "font_bald": self.SettingsWindow.ui.CBLVL1Bold.isChecked(),
             "font_italic": self.SettingsWindow.ui.CBLVL1Italic.isChecked(),
             "font_underline": self.SettingsWindow.ui.CBLVL1Underline.isChecked(),
-            "font_color": None,  # нет такого в UI
-            "font_back_color": None,  # нет такого в UI
+            "font_color": False,  # нет такого в UI
+            "font_back_color": False,  # нет такого в UI
             "alignment": alignment,
             "keep_with_next": self.SettingsWindow.ui.CBLVL1NotSpacing.isChecked(),
             "page_break_before": self.SettingsWindow.ui.CBLVL1NewPage.isChecked(),  # нет такого в UI, false по умолчанию для main текста
@@ -460,8 +460,8 @@ class MainWindow(QMainWindow):
             "font_bald": self.SettingsWindow.ui.CBLVL2Bold.isChecked(),
             "font_italic": self.SettingsWindow.ui.CBLVL2Italic.isChecked(),
             "font_underline": self.SettingsWindow.ui.CBLVL2Underline.isChecked(),
-            "font_color": None,  # нет такого в UI
-            "font_back_color": None,  # нет такого в UI
+            "font_color": False,  # нет такого в UI
+            "font_back_color": False,  # нет такого в UI
             "alignment": alignment,
             "keep_with_next": self.SettingsWindow.ui.CBLVL2NotSpacing.isChecked(),
             "page_break_before": self.SettingsWindow.ui.CBLVL2NewPage.isChecked(),  # нет такого в UI, false по умолчанию для main текста
@@ -491,8 +491,8 @@ class MainWindow(QMainWindow):
             "font_bald": self.SettingsWindow.ui.CBLVL3Bold.isChecked(),
             "font_italic": self.SettingsWindow.ui.CBLVL3Italic.isChecked(),
             "font_underline": self.SettingsWindow.ui.CBLVL3Underline.isChecked(),
-            "font_color": None,  # нет такого в UI
-            "font_back_color": None,  # нет такого в UI
+            "font_color": False,  # нет такого в UI
+            "font_back_color": False,  # нет такого в UI
             "alignment": alignment,
             "keep_with_next": self.SettingsWindow.ui.CBLVL3NotSpacing.isChecked(),
             "page_break_before": self.SettingsWindow.ui.CBLVL3NewPage.isChecked(),  # нет такого в UI, false по умолчанию для main текста
@@ -525,7 +525,6 @@ class MainWindow(QMainWindow):
             "left_indent_mod": float(self.SettingsWindow.ui.LEListMarginModify.text()),
             "first_line_indent": -float(self.SettingsWindow.ui.LEListLedge.text()),
         }
-        print(self.list_checklist)
 
     def getTableSettings(self):
         alignment = 0

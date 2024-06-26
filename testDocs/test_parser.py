@@ -71,7 +71,7 @@ class TestDocParser(ut.TestCase):
                             default_image_checklist, default_image_name_checklist)
         file = Path(__file__).with_name('testTables.docx')
         comments = parser.parse_document(file)
-        self.assertEqual(len(comments), 2, "Comment count incorrect")
+        self.assertEqual(len(comments), 3, "Comment count incorrect")
 
     # Docx with 2 tables & 2 table names
     # 1 correct, 1 incorrect
@@ -84,7 +84,7 @@ class TestDocParser(ut.TestCase):
                             default_image_checklist, default_image_name_checklist)
         file = Path(__file__).with_name('testTables.docx')
         comments = parser.parse_document(file)
-        self.assertEqual(len(comments[0]), 5, "Mistake count incorrect")
+        self.assertEqual(len(comments[1]), 6, "Mistake count incorrect")
 
     # Docx with 2 tables & 2 table names
     # 1 correct, 1 incorrect
@@ -97,7 +97,7 @@ class TestDocParser(ut.TestCase):
                             default_image_checklist, default_image_name_checklist)
         file = Path(__file__).with_name('testTables.docx')
         comments = parser.parse_document(file)
-        self.assertEqual(len(comments[1]), 3, "Mistake count incorrect")
+        self.assertEqual(len(comments[2]), 3, "Mistake count incorrect")
 
     # Docx with 2 images & 2 image names
     # 1 correct, 1 incorrect
