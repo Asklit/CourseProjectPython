@@ -430,7 +430,6 @@ class DocumentParser:
         return margins_comments
 
     def parse_document(self, filename):
-
         document = Document(filename)
         comment_count = 0
         written_comments = []
