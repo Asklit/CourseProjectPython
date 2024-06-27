@@ -45,7 +45,6 @@ class Worker(QThread):
         self.parser = parser
 
     def doc_finished(self, res):
-
         self.doc_progressed.emit()
 
     def run(self):
