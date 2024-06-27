@@ -524,7 +524,6 @@ class MainWindow(QMainWindow):
             "left_indent_mod": float(self.SettingsWindow.ui.LEListMarginModify.text()),
             "first_line_indent": -float(self.SettingsWindow.ui.LEListLedge.text()),
         }
-        print(self.list_checklist)
 
     def getTableSettings(self):
         alignment = 0
