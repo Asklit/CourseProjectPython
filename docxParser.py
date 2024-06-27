@@ -318,9 +318,12 @@ class DocumentParser:
         if font_color and font_color[0] == font_color[1] == font_color[2] == 0:
             font_color = False
         # Цвет подчёркивания текста
-        font_back_color = run.font.highlight_color if run.font.highlight_color is not None else \
-            st.font.highlight_color if st.font.highlight_color is not None else \
-                default.font.highlight_color if default.font.highlight_color is not None else False
+        try:
+            font_back_color = run.font.highlight_color if run.font.highlight_color is not None else \
+                st.font.highlight_color if st.font.highlight_color is not None else \
+                    default.font.highlight_color if default.font.highlight_color is not None else False
+        except:
+            font_back_color = False
 
         # Выравнивание (лево/центр/право/ширина)
         alignment = formatting.alignment if formatting.alignment is not None else \
