@@ -20,6 +20,10 @@ from docx import Document
 from docxParser import DocumentParser
 from ui_mainwindow import Ui_Checker
 
+# Enable high DPI scaling
+QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+# Use high DPI icon
+QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
 def parse_docx(filename, p):
     file, extension = os.path.splitext(filename)
