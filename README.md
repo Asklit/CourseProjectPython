@@ -9,9 +9,6 @@ This group project is a desktop application designed to automatically check the 
 - [bayoo-docx](https://pypi.org/project/bayoo-docx/) - DOCX document manipulation
 - [PyQt5](https://www.riverbankcomputing.com/software/pyqt/) - GUI framework
 - [multiprocess](https://pypi.org/project/multiprocess/) - Multiprocessing utilities
-- [setuptools](https://setuptools.pypa.io/) - Package management
-- [typing_extensions](https://pypi.org/project/typing-extensions/) - Type hinting support
-- [packaging](https://packaging.pypa.io/) - Packaging utilities
 
 ## Prerequisites
 
